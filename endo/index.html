@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clinora Endo · Instalar</title><meta name="description" content="Gestão de clínicas de endoscopia: exames, relatórios, histologia, vigilância e qualidade.">
+<link rel="icon" href="../softwora-simbolo.svg">
+<style>@font-face{font-family:PJS;src:url(../pjs.woff2) format('woff2');font-weight:200 800;font-display:swap}
+:root{--bg:#F5F7FB;--card:#fff;--ink:#0B132B;--mut:#475569;--line:#E2E8F0;--cor:#0B132B}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0A0F1E;--card:#121A2E;--ink:#E8ECF4;--mut:#A3AEC2;--line:#26324A}}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--ink);font:400 16px/1.55 PJS,system-ui,-apple-system,'Segoe UI',sans-serif}
+a{color:inherit}.w{max-width:1080px;margin:0 auto;padding:0 16px}
+header{border-bottom:1px solid var(--line);background:var(--card)}header .w{display:flex;align-items:center;gap:12px;height:64px}
+header img{height:26px}header nav{margin-left:auto;font-size:14px}header nav a{text-decoration:none;color:var(--mut)}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.15;letter-spacing:-.02em;margin:0 0 10px}
+.lead{color:var(--mut);font-size:18px;max-width:640px;margin:0}
+.hero{padding:48px 0 24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:16px 0 48px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:12px;text-decoration:none}
+.card:hover{border-color:var(--cor)}
+.card img{height:34px;width:auto;align-self:flex-start}.card p{margin:0;color:var(--mut);font-size:15px}
+.card .vers{font-size:13px;color:var(--mut);margin-top:auto}
+.acoes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:28px 0}
+@media (max-width:760px){.acoes{grid-template-columns:1fr}}
+.acao{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:8px}
+.acao h2{font-size:18px;margin:0}.acao p{margin:0;color:var(--mut);font-size:14px;flex:1}
+.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;height:46px;border-radius:12px;background:var(--cor);color:#fff;font-weight:700;text-decoration:none;padding:0 18px;border:0;font:700 15px PJS,system-ui,sans-serif}
+.btn.sec{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn[aria-disabled=true]{opacity:.55;pointer-events:none}
+.mini{font-size:13px;color:var(--mut)}
+ul.notas{margin:0 0 40px;padding-left:20px;color:var(--mut)}
+.passos{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:0 0 24px}
+.passos h2{font-size:18px;margin:0 0 8px}.passos ol{margin:0;padding-left:20px;color:var(--mut)}
+footer{border-top:1px solid var(--line);color:var(--mut);font-size:13px;padding:24px 0 40px}
+.hero .btn{margin-top:20px}
+.pedido{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:0 0 24px;scroll-margin-top:16px}
+.pedido h2{font-size:22px;margin:0 0 6px}.pedido>p{margin:0 0 16px;color:var(--mut)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.form{grid-template-columns:1fr}}
+.campo{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}.campo.todo{grid-column:1/-1}
+.campo input,.campo textarea{font:400 16px PJS,system-ui,sans-serif;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}
+.campo textarea{min-height:96px;resize:vertical}
+.campo input:focus-visible,.campo textarea:focus-visible,.btn:focus-visible{outline:2px solid var(--cor);outline-offset:2px}
+.form .fim{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.estado{font-size:14px;margin:0}.estado.ok{color:#15803D}.estado.erro{color:#B91C1C}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .estado.ok{color:#4ADE80}:root:not([data-theme=light]) .estado.erro{color:#F87171}}
+:root{--cor:#1D4ED8}</style></head>
+<body><header><div class="w"><a href="../"><img src="../softwora-logotipo.svg" alt="Softwora"></a><nav><a href="../">Todos os produtos</a></nav></div></header>
+<main class="w"><section class="hero"><img src="logotipo.svg" alt="Clinora Endo" style="height:48px;margin-bottom:22px"><h1>Clinora Endo</h1><p class="lead">Gestão de clínicas de endoscopia: exames, relatórios, histologia, vigilância e qualidade.</p><a class="btn" href="#pedir-demonstracao">Pedir demonstração</a></section>
+<div class="acoes">
+ <div class="acao"><h2>Usar online</h2><p>Entra com o utilizador da tua clínica. Os dados ficam na base de dados da clínica (Supabase, na UE).</p><a class="btn" data-online="endo" aria-disabled="true" href="#">Endereço por publicar</a><span class="mini">Pede-nos o endereço da tua conta.</span></div>
+ <div class="acao"><h2>Experimentar</h2><p>Clínica fictícia com exames, relatórios e histologia. Entra diretamente, sem conta.</p><a class="btn sec" href="demo.html">Abrir a demonstração</a><span class="mini">Dados fictícios. Corre no browser, sem instalar nada.</span></div>
+ <div class="acao" id="windows"><h2>Instalar no Windows</h2><p>Programa para Windows 10 e 11 (64 bits), com atalho no ambiente de trabalho, demonstração incluída e desinstalador.</p><a class="btn" data-exe="Clinora-Endo-Setup-1.2.0.exe" href="#" download>Descarregar para Windows</a><span class="mini">Clinora-Endo-Setup-1.2.0.exe · cerca de 85 MB</span></div>
+</div>
+<div class="passos"><h2>Como instalar no Windows</h2><ol><li>Descarrega o ficheiro e abre-o.</li><li>Se aparecer «O Windows protegeu o seu PC», carrega em «Mais informações» e depois em «Executar mesmo assim».</li><li>Escolhe a pasta (ou deixa a sugerida) e conclui. O Clinora Endo abre no ecrã de início, onde podes entrar ou experimentar a demonstração.</li></ol></div>
+<ul class="notas"><li>Cada clínica tem a sua base de dados no Supabase, na UE.</li><li>Dicionário clínico validado na interface e na base de dados.</li></ul>
+<section class="pedido" id="pedir-demonstracao" aria-labelledby="pd-h"><h2 id="pd-h">Pedir demonstração</h2>
+<p>Deixa os teus contactos e mostramos-te o Clinora Endo em 20 minutos, online, com o teu caso. Respondemos num dia útil.</p>
+<form class="form" data-produto="Clinora Endo" data-marca="clinia" data-destino="https://hsocial.vercel.app/api/leads" novalidate onsubmit="return false">
+ <label class="campo">Nome<input name="nome" autocomplete="name" required></label>
+ <label class="campo">Email<input name="email" type="email" autocomplete="email" required></label>
+ <label class="campo">Clínica ou hospital<input name="empresa" autocomplete="organization"></label>
+ <label class="campo">Telefone (opcional)<input name="telefone" type="tel" autocomplete="tel"></label>
+ <label class="campo todo">O que gostavas de ver? (opcional)<textarea name="mensagem"></textarea></label>
+ <div class="fim"><button class="btn" type="submit">Pedir demonstração</button><p class="estado" role="status" aria-live="polite"></p></div>
+</form>
+<p class="mini">Também podes escrever para <a href="mailto:support@clinia.live?subject=Demonstração Clinora Endo">support@clinia.live</a>. Os teus dados só servem para marcar a demonstração.</p></section></main>
+<script src="../pedido.js" defer></script>
+<footer><div class="w">Softwora · uma empresa do Grupo Henterprises. Os instaladores para Windows não estão assinados digitalmente: no primeiro arranque o Windows pode mostrar «O Windows protegeu o seu PC» → «Mais informações» → «Executar mesmo assim».</div></footer>
+<script src="../ligacoes.js"></script>
+</body></html>

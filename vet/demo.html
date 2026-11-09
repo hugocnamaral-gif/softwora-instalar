@@ -1,0 +1,807 @@
+<title>Clinora Vet</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#1b1f24;--muted:#5f6873;--line:#e3e6eb;--chip:#eef1f5;--accent:#0D9488;--good:#1f9d55;--warn:#b87500;--bad:#d64545;--side:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121418;--card:#1b1e24;--ink:#e8eaed;--muted:#9aa3ad;--line:#2c3038;--chip:#252a32;--side:#16191e;--warn:#e0a030;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121418;--card:#1b1e24;--ink:#e8eaed;--muted:#9aa3ad;--line:#2c3038;--chip:#252a32;--side:#16191e;--warn:#e0a030;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);display:flex;min-height:100vh}
+aside{width:232px;background:var(--side);border-right:1px solid var(--line);padding:18px 12px;flex-shrink:0;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow:auto}
+.brand{font-weight:700;font-size:17px;padding:0 10px 4px;display:flex;align-items:center;gap:8px}
+.brand svg.logo{height:40px;width:auto;display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .brand svg.logo path[fill="#0F172A"]{fill:#fff}}
+:root[data-theme="dark"] .brand svg.logo path[fill="#0F172A"]{fill:#fff}
+.sub{color:var(--muted);font-size:11px;padding:0 10px 14px}
+.navh{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:10px 10px 4px}
+nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;color:var(--ink);text-decoration:none;cursor:pointer;margin-bottom:1px}
+nav a:hover{background:var(--chip)}
+nav a.on{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);font-weight:600}
+nav a .n{margin-left:auto;font-size:11px;background:var(--chip);color:var(--muted);border-radius:99px;padding:0 7px}
+nav a .n.w{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
+.proto{margin-top:auto;font-size:11px;color:var(--muted);padding:8px 10px;border:1px dashed var(--line);border-radius:8px}
+main{flex:1;padding:24px 28px;min-width:0}
+h1{font-size:22px;margin:0 0 4px}
+.lead{color:var(--muted);margin:0 0 18px}
+.view{display:none}.view.on{display:block}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.card h3{margin:0 0 10px;font-size:15px}
+.click{cursor:pointer;transition:border-color .15s}.click:hover{border-color:var(--accent)}
+.kpi .v{font-size:26px;font-weight:700}.kpi .l{color:var(--muted);font-size:12px}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;background:var(--chip);color:var(--muted);margin:2px 4px 2px 0;white-space:nowrap}
+.chip.warn{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.chip.bad{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+.chip.good{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+.chip.acc{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+.muted{color:var(--muted)}.small{font-size:12px}
+.hi{color:var(--bad);font-weight:600}.lo{color:var(--warn);font-weight:600}
+button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 12px;border-radius:8px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+button.sm{padding:4px 9px;font-size:12px}
+input,select,textarea{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 10px;width:100%}
+textarea{min-height:110px;resize:vertical}
+label.f{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+.tw{overflow-x:auto}
+a{color:var(--accent)}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:8px;border-top:1px solid var(--line);vertical-align:middle}
+th{font-size:12px;color:var(--muted);font-weight:500;border-top:none}
+td.r,th.r{text-align:right}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+.av{width:38px;height:38px;border-radius:50%;background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.slot{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px}
+.dose{background:var(--chip);border-radius:8px;padding:8px 10px;margin-top:8px;font-size:13px}
+.hcell{width:46px;text-align:center;padding:4px}
+.hb{width:36px;height:28px;padding:0;border-radius:6px;font-size:12px}
+.hb.done{background:color-mix(in srgb,var(--good) 18%,transparent);border-color:var(--good);color:var(--good)}
+.hb.late{border-color:var(--bad);color:var(--bad)}
+.spec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button.on{border-color:var(--accent);color:var(--accent);font-weight:600}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;transition:transform .25s;z-index:30;max-width:90vw}
+#toast.on{transform:translateX(-50%) translateY(0)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+.modal.on{display:flex}
+.modal>.card{max-width:680px;width:100%;max-height:85vh;overflow:auto}
+.warnbox{border:1px solid color-mix(in srgb,var(--warn) 50%,transparent);background:color-mix(in srgb,var(--warn) 8%,transparent);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--muted);margin-top:8px}
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.step{font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--line);color:var(--muted);background:var(--card)}
+.step.on{border-color:var(--accent);color:var(--accent);font-weight:600}
+.step.ok{background:color-mix(in srgb,var(--good) 14%,transparent);border-color:transparent;color:var(--good)}
+.drop{display:block;border:2px dashed var(--line);border-radius:12px;padding:36px 16px;text-align:center;cursor:pointer;transition:border-color .15s}
+.drop:hover,.drop.over{border-color:var(--accent)}
+.pbar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}
+.pbar>i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.mrow{display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line)}
+.phone{max-width:330px;margin:0 auto;border:10px solid #1b1f24;border-radius:34px;background:#fff;color:#1b1f24;padding:16px 14px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.phone .pt{font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.phone .pt i{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#2DD4BF,#0D9488);display:inline-block}
+.phone input,.phone select{background:#fff;color:#1b1f24;border-color:#d8dce2;padding:7px 9px}
+.phone .pm{color:#5f6873;font-size:12px}
+.picks{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0 8px}
+.pick{padding:6px 8px;font-size:12px;border-radius:8px;border:1px solid #d8dce2;background:#fff;color:#1b1f24;min-width:52px}
+.pick.on{background:#0D9488;border-color:#0D9488;color:#fff}
+.pick.x{opacity:.35;text-decoration:line-through;pointer-events:none}
+.bars{display:flex;align-items:flex-end;gap:10px;height:170px;margin-top:8px}
+.bars>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px;font-size:11px;color:var(--muted)}
+.bars i{display:block;width:100%;max-width:46px;background:var(--accent);border-radius:5px 5px 0 0;min-height:2px;transition:height .5s}
+.bars>div.cur i{background:linear-gradient(180deg,#2DD4BF,#0D9488)}
+.cmp td:nth-child(2){color:var(--muted)}.cmp td:nth-child(3){font-weight:600;color:var(--accent)}
+.tour{position:fixed;right:18px;bottom:18px;width:360px;max-width:calc(100vw - 32px);background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:14px 16px;box-shadow:0 12px 32px rgba(0,0,0,.18);z-index:25;display:none}
+.tour.on{display:block}
+.tour .tk{font-size:11px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.tour h4{margin:4px 0 6px;font-size:15px}
+.tour p{margin:0 0 6px;font-size:13px;color:var(--muted)}
+.tour .dots{display:flex;gap:4px;margin:8px 0}.tour .dots i{flex:1;height:4px;border-radius:2px;background:var(--line)}.tour .dots i.on{background:var(--accent)}
+.hl{outline:3px solid color-mix(in srgb,#F59E0B 70%,transparent);outline-offset:3px;border-radius:12px;transition:outline-color .3s}
+.tourbtn{margin-top:8px;width:100%;background:color-mix(in srgb,var(--accent) 12%,transparent);border-color:transparent;color:var(--accent);font-weight:600}
+.hero{text-align:center}.hero h2{margin:6px 0 6px;font-size:21px}.hero p{color:var(--muted);margin:0 0 6px}
+.hero .who{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0;text-align:left}
+.hero .who div{background:var(--chip);border-radius:10px;padding:8px 10px;font-size:12px}
+@media (max-width:980px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){body{flex-direction:column}aside{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--line)}nav{display:flex;overflow-x:auto;gap:4px}.navh{display:none}nav a{white-space:nowrap}.proto{display:none}.g2,.g3{grid-template-columns:1fr}main{padding:16px}}
+@media (max-width:520px){.g4,.spec{grid-template-columns:1fr}}
+</style>
+
+<aside>
+  <div class="brand"><svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="14 14 208.49 92" role="img" aria-label="Clinora Vet — logótipo"><defs><linearGradient id="cvp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2DD4BF"/><stop offset="1" stop-color="#0D9488"/></linearGradient><linearGradient id="cva" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBBF24"/><stop offset="1" stop-color="#F59E0B"/></linearGradient></defs><g transform="translate(12,12)"><rect x="6" y="6" width="84" height="84" rx="24" fill="url(#cvp)"/><path d="M48 49C38.5 49 30.5 58.5 32.3 65.6C33.8 71.6 40.6 71.2 48 69.9C55.4 71.2 62.2 71.6 63.7 65.6C65.5 58.5 57.5 49 48 49Z" fill="#fff"/><ellipse cx="29.5" cy="45.5" rx="5.6" ry="7.2" transform="rotate(-22 29.5 45.5)" fill="#fff"/><ellipse cx="40" cy="33.5" rx="5.8" ry="7.6" transform="rotate(-8 40 33.5)" fill="#fff"/><ellipse cx="66.5" cy="45.5" rx="5.6" ry="7.2" transform="rotate(22 66.5 45.5)" fill="#fff"/><ellipse cx="56" cy="33.5" rx="5.8" ry="7.6" transform="rotate(8 56 33.5)" fill="url(#cva)"/></g><path fill="#0D9488" d="M134.33 47.18Q133.13 47.18 132.12 46.75Q131.1 46.31 130.35 45.53Q129.59 44.75 129.17 43.7Q128.75 42.65 128.75 41.41Q128.75 40.16 129.16 39.11Q129.57 38.05 130.33 37.28Q131.09 36.5 132.11 36.08Q133.13 35.65 134.33 35.65Q135.53 35.65 136.48 36.05Q137.43 36.46 138.09 37.13Q138.75 37.79 139.04 38.59L137.21 39.44Q136.89 38.6 136.14 38.06Q135.39 37.51 134.33 37.51Q133.28 37.51 132.48 38Q131.67 38.5 131.23 39.37Q130.79 40.24 130.79 41.41Q130.79 42.58 131.23 43.45Q131.67 44.33 132.48 44.83Q133.28 45.32 134.33 45.32Q135.39 45.32 136.14 44.77Q136.89 44.23 137.21 43.39L139.04 44.24Q138.75 45.04 138.09 45.7Q137.43 46.37 136.48 46.78Q135.53 47.18 134.33 47.18Z"/><path fill="#0D9488" d="M143.68 47V35.83H145.72V45.2H150.51V47Z"/><path fill="#0D9488" d="M154.83 47V35.83H156.86V47Z"/><path fill="#0D9488" d="M162.01 47V35.83H163.6L168.92 43V35.83H170.96V47H169.36L164.05 39.7V47Z"/><path fill="#0D9488" d="M181.62 47.18Q180.39 47.18 179.33 46.75Q178.26 46.31 177.47 45.53Q176.67 44.75 176.23 43.69Q175.79 42.64 175.79 41.41Q175.79 40.16 176.22 39.11Q176.66 38.06 177.45 37.28Q178.25 36.5 179.31 36.08Q180.38 35.65 181.62 35.65Q182.87 35.65 183.93 36.08Q184.99 36.52 185.79 37.29Q186.58 38.06 187.03 39.11Q187.47 40.16 187.47 41.41Q187.47 42.64 187.02 43.69Q186.57 44.75 185.77 45.53Q184.98 46.31 183.92 46.75Q182.87 47.18 181.62 47.18ZM181.62 45.32Q182.45 45.32 183.14 45.03Q183.83 44.74 184.34 44.21Q184.86 43.69 185.14 42.97Q185.41 42.25 185.41 41.41Q185.41 40.57 185.14 39.86Q184.86 39.14 184.34 38.61Q183.83 38.08 183.14 37.79Q182.45 37.51 181.62 37.51Q180.81 37.51 180.12 37.79Q179.43 38.08 178.92 38.61Q178.4 39.14 178.11 39.86Q177.83 40.57 177.83 41.41Q177.83 42.25 178.11 42.97Q178.4 43.69 178.92 44.21Q179.43 44.74 180.12 45.03Q180.81 45.32 181.62 45.32Z"/><path fill="#0D9488" d="M192.28 47V35.83H196.44Q197.58 35.83 198.45 36.24Q199.33 36.65 199.82 37.44Q200.32 38.23 200.32 39.35Q200.32 40.51 199.77 41.32Q199.22 42.13 198.3 42.52L200.86 47H198.55L196.24 42.88H194.32V47ZM194.32 41.08H196.47Q197.02 41.08 197.43 40.86Q197.83 40.64 198.06 40.25Q198.28 39.86 198.28 39.35Q198.28 38.83 198.06 38.45Q197.83 38.06 197.43 37.85Q197.02 37.63 196.47 37.63H194.32Z"/><path fill="#0D9488" d="M204.28 47 208.13 35.83H210.77L214.62 47H212.41L211.61 44.6H207.29L206.48 47ZM207.88 42.8H211.03L209.45 38.09Z"/><path fill="#0F172A" d="M138.17 89 127.46 57.71H134.6L141.95 80.6L149.3 57.71H156.44L145.73 89Z"/><path fill="#0F172A" d="M170.26 89.5Q166.61 89.5 163.92 87.89Q161.23 86.27 159.76 83.54Q158.29 80.81 158.29 77.49Q158.29 74.05 159.82 71.36Q161.36 68.67 163.96 67.12Q166.56 65.56 169.84 65.56Q172.57 65.56 174.67 66.43Q176.77 67.29 178.22 68.84Q179.67 70.39 180.42 72.43Q181.18 74.47 181.18 76.86Q181.18 77.53 181.12 78.19Q181.05 78.84 180.89 79.3H164.84Q164.93 80.18 165.26 80.94Q165.89 82.41 167.19 83.22Q168.5 84.04 170.34 84.04Q172.02 84.04 173.22 83.37Q174.42 82.7 175.09 81.52L180.13 83.92Q179.46 85.6 178.01 86.86Q176.56 88.12 174.59 88.81Q172.61 89.5 170.26 89.5ZM164.97 74.68H174.5Q174.46 74.13 174.29 73.63Q173.83 72.24 172.67 71.42Q171.52 70.6 169.84 70.6Q168.2 70.6 167.03 71.4Q165.85 72.2 165.26 73.75Q165.09 74.17 164.97 74.68Z"/><path fill="#0F172A" d="M195.92 89.25Q191.76 89.25 189.48 87Q187.19 84.76 187.19 80.73V71.53H183.32V66.07H183.53Q185.3 66.07 186.24 65.19Q187.19 64.3 187.19 62.54V60.86H193.49V66.07H198.86V71.53H193.49V80.31Q193.49 81.48 193.91 82.26Q194.33 83.04 195.21 83.41Q196.09 83.79 197.39 83.79Q197.69 83.79 198.06 83.75Q198.44 83.71 198.86 83.67V89Q198.23 89.08 197.43 89.17Q196.64 89.25 195.92 89.25Z"/></svg></div>
+  <div class="sub">Clínica Veterinária do Rio · <span id="today"></span></div>
+  <nav id="nav">
+    <div class="navh">Clínica</div>
+    <a data-v="agenda" class="on">Agenda</a>
+    <a data-v="animais">Animais e donos</a>
+    <a data-v="consulta">Consulta</a>
+    <a data-v="exames">Exames <span class="n" id="nExa"></span></a>
+    <a data-v="intern">Internamento <span class="n" id="nInt"></span></a>
+    <a data-v="pedidos">Pedidos online <span class="n w" id="nPed"></span></a>
+    <a data-v="relat">Relatórios</a>
+    <div class="navh">Gestão</div>
+    <a data-v="farm">Farmácia e stock <span class="n w" id="nStk"></span></a>
+    <a data-v="orc">Orçamentos</a>
+    <a data-v="fatura">Faturação</a>
+    <a data-v="lemb">Lembretes <span class="n" id="nLem"></span></a>
+    <a data-v="painel">Painel</a>
+    <a data-v="migr">Migrar do QVET</a>
+  </nav>
+  <button class="tourbtn" onclick="tourStart()">▶ Demo guiada (5 min)</button>
+  <div class="proto">Protótipo · dados fictícios · doses ilustrativas, não usar clinicamente · nada é guardado</div>
+</aside>
+<main>
+
+<section class="view on" id="v-agenda">
+  <h1>Hoje na clínica</h1><p class="lead">Clique numa marcação para abrir a consulta.</p>
+  <div class="grid g4" id="kpis" style="margin-bottom:14px"></div>
+  <div class="grid g3" id="agrid"></div>
+</section>
+
+<section class="view" id="v-animais">
+  <h1>Animais e donos</h1>
+  <div class="row" style="margin-bottom:12px"><input id="aq" placeholder="Procurar animal, dono, telefone ou microchip…" style="max-width:380px"></div>
+  <div class="grid g2"><div class="card tw"><table><thead><tr><th>Animal</th><th>Dono</th><th>Espécie</th></tr></thead><tbody id="atb"></tbody></table></div>
+  <div class="card" id="afi"><p class="muted">Selecione um animal.</p></div></div>
+</section>
+
+<section class="view" id="v-consulta">
+  <div class="row" style="margin-bottom:12px"><div class="av" id="cav"></div><div><h1 id="cname" style="margin:0"></h1><div class="muted" id="cinfo"></div></div><span class="sp"></span>
+    <select id="cspec" style="width:auto"></select><button id="cdict">Ditar consulta (IA)</button></div>
+  <div class="grid g2">
+    <div>
+      <div class="card"><h3>Nota clínica (SOAP)</h3>
+        <label class="f">S — Subjetivo (o que o dono conta)</label><textarea id="cs" style="min-height:64px"></textarea>
+        <label class="f">O — Objetivo (exame)</label><textarea id="co" style="min-height:64px"></textarea>
+        <label class="f">A — Avaliação</label><textarea id="ca" style="min-height:52px"></textarea>
+        <label class="f">P — Plano</label><textarea id="cp" style="min-height:52px"></textarea>
+      </div>
+      <div class="card" style="margin-top:14px" id="cspecbox"></div>
+    </div>
+    <div>
+      <div class="card" id="rxbox"><h3>Prescrição</h3>
+        <div class="row"><select id="rsel" style="flex:1"></select><button id="radd">Prescrever</button></div>
+        <div class="dose" id="rdose"></div>
+        <table style="margin-top:8px"><tbody id="rtb"></tbody></table>
+      </div>
+      <div class="card" style="margin-top:14px"><h3>Exames</h3>
+        <div class="row"><select id="esel" style="flex:1"></select><button id="eadd">Pedir exame</button></div>
+        <div id="elist" class="small" style="margin-top:8px"></div>
+      </div>
+      <div class="card" style="margin-top:14px"><h3>Atos e produtos</h3>
+        <div class="row"><select id="csel" style="flex:1"></select><button id="cadd">Adicionar</button></div>
+        <table style="margin-top:10px"><tbody id="ctb"></tbody></table>
+        <div class="row" style="margin-top:12px"><b>Total</b><span class="sp"></span><b id="ctot"></b></div>
+        <label class="f">Peso (kg)</label><input id="cw" type="number" step="0.1">
+        <div class="row" style="margin-top:14px"><button id="corc">Criar orçamento</button><button id="cint">Internar</button><span class="sp"></span><button class="pri" id="cclose">Fechar e faturar</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-exames">
+  <h1>Exames</h1><p class="lead">Análises, imagiologia e ECG. Resultados fora do intervalo de referência ficam assinalados.</p>
+  <div class="tabs" id="etabs"></div>
+  <div class="card tw"><table><thead><tr><th>Data</th><th>Animal</th><th>Exame</th><th>Pedido por</th><th>Estado</th><th></th></tr></thead><tbody id="etb"></tbody></table></div>
+</section>
+
+<section class="view" id="v-intern">
+  <h1>Internamento</h1><p class="lead">Plano de tratamentos por hora. Clique numa hora para registar a administração.</p>
+  <div class="grid" id="igrid"></div>
+</section>
+
+<section class="view" id="v-relat">
+  <h1>Relatórios</h1><p class="lead">Relatórios clínicos gerados a partir da ficha, exames e internamento. Revistos pelo veterinário antes de enviar.</p>
+  <div class="grid g2">
+    <div class="card">
+      <label class="f" style="margin-top:0">Animal</label><select id="ranimal"></select>
+      <label class="f">Tipo de relatório</label><select id="rtype">
+        <option>Relatório de consulta</option><option>Relatório de especialidade</option><option>Relatório de alta de internamento</option><option>Carta de referência para outro centro</option><option>Resumo do historial clínico</option></select>
+      <div class="row" style="margin-top:14px"><span class="sp"></span><button class="pri" id="rgen">Gerar com IA</button></div>
+    </div>
+    <div class="card"><h3>Pré-visualização</h3><textarea id="rtxt" style="min-height:300px"></textarea>
+      <div class="row" style="margin-top:10px"><span class="sp"></span><button id="rmail">Enviar ao dono</button><button id="rpdf">Guardar na ficha</button></div></div>
+  </div>
+</section>
+
+<section class="view" id="v-farm">
+  <h1>Farmácia e stock</h1><p class="lead">Stock, lotes e validades. Cada prescrição e administração fica no registo de medicamentos.</p>
+  <div class="card tw"><table><thead><tr><th>Produto</th><th>Lote</th><th>Validade</th><th class="r">Stock</th><th class="r">Preço</th><th>Alertas</th><th></th></tr></thead><tbody id="ptb"></tbody></table></div>
+  <div class="card tw" style="margin-top:14px"><h3>Registo de medicamentos (saídas)</h3><table><thead><tr><th>Data/hora</th><th>Produto</th><th>Lote</th><th>Quantidade</th><th>Animal</th><th>Veterinário</th></tr></thead><tbody id="mtb"></tbody></table></div>
+</section>
+
+<section class="view" id="v-orc">
+  <h1>Orçamentos</h1><p class="lead">Estimativas com intervalo mínimo–máximo. Quando o dono aceita, convertem-se em fatura.</p>
+  <div class="card tw"><table><thead><tr><th>N.º</th><th>Animal</th><th>Descrição</th><th class="r">Estimativa</th><th>Estado</th><th></th></tr></thead><tbody id="otb"></tbody></table></div>
+</section>
+
+<section class="view" id="v-fatura">
+  <h1>Faturação</h1><p class="lead">No produto real, emitidas via software certificado pela AT (com ATCUD e QR code).</p>
+  <div class="card tw"><table><thead><tr><th>N.º</th><th>Cliente</th><th>NIF</th><th>Origem</th><th class="r">Total</th><th>Estado</th><th></th></tr></thead><tbody id="ftb"></tbody></table></div>
+</section>
+
+<section class="view" id="v-lemb">
+  <h1>Lembretes</h1><p class="lead">Vacinas e desparasitações em atraso ou a vencer nos próximos 30 dias. A mensagem leva o link para o tutor marcar sozinho.</p>
+  <div class="row" style="margin-bottom:12px"><span class="sp"></span><button class="pri" id="lall">Enviar todos por WhatsApp</button></div>
+  <div class="card tw"><table><thead><tr><th>Animal</th><th>Dono</th><th>O quê</th><th>Data</th><th>Lembrete</th></tr></thead><tbody id="ltb"></tbody></table></div>
+</section>
+<section class="view" id="v-pedidos">
+  <h1>Pedidos online</h1><p class="lead">O tutor marca no telemóvel a qualquer hora, só nas horas livres. A receção confirma com um clique e a consulta entra na agenda.</p>
+  <div class="grid g2">
+    <div><div class="muted small" style="text-align:center;margin-bottom:6px">O que o tutor vê em <b>clinora.vet/marcar/clinica-do-rio</b></div><div class="phone" id="phone"></div></div>
+    <div><div class="card tw" id="pedcard"><h3>Por responder</h3><div id="pedtb"></div></div>
+      <div class="card" style="margin-top:14px"><h3>Porque conta</h3><div class="mrow"><span>Pedidos fora do horário da receção</span><b>~40 %</b></div><div class="mrow"><span>Chamadas que deixam de ser precisas</span><b>~25 / mês</b></div><div class="mrow"><span>Marcações duplicadas ou em horas ocupadas</span><b>0</b></div><p class="muted small">Valores ilustrativos para uma clínica com 2 veterinários.</p></div></div>
+  </div>
+</section>
+
+<section class="view" id="v-painel">
+  <h1>Painel da clínica</h1><p class="lead">Outubro de 2026 · os números que contam, sem exportar para Excel.</p>
+  <div class="grid g4" id="pkpi" style="margin-bottom:14px"></div>
+  <div class="grid g2">
+    <div class="card"><h3>Faturação dos últimos 6 meses</h3><div class="bars" id="pbars"></div></div>
+    <div class="card"><h3>A acompanhar</h3><div id="pwatch"></div></div>
+  </div>
+  <div class="card tw" style="margin-top:14px"><h3>Quanto custaria o mesmo no QVET</h3><table class="cmp"><thead><tr><th>Para 2 veterinários</th><th class="r">QVET</th><th class="r">Clinora Vet</th></tr></thead><tbody id="pcmp"></tbody></table>
+  <p class="muted small">Preços públicos do QVET em out/2026 (sem IVA); os módulos extra variam por contrato.</p></div>
+</section>
+
+<section class="view" id="v-migr">
+  <h1>Migrar do QVET</h1><p class="lead">Traga todo o histórico da clínica. Nada é apagado no QVET, e pode verificar tudo antes de confirmar.</p>
+  <div class="steps" id="msteps"></div>
+  <div id="mbox"></div>
+</section>
+</main>
+<div id="toast"></div>
+<div class="tour" id="tour" role="dialog" aria-live="polite"></div>
+<div class="modal" id="modal"><div class="card"><div id="mbody"></div><div class="row" style="margin-top:14px"><span class="sp"></span><button onclick="closeModal()">Fechar</button></div></div></div>
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const TODAY = "2026-10-27";
+const now = () => new Date().toTimeString().slice(0,5);
+const hourNow = () => new Date().getHours();
+const eur = v => v.toLocaleString("pt-PT", {minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: "always"}) + " €";
+const days = d => Math.round((Date.parse(d) - Date.parse(TODAY)) / 864e5);
+const kg = w => String(w).replace(".", ",") + " kg";
+const fmtD = d => d.split("-").reverse().join("/");
+$("#today").textContent = fmtD(TODAY);
+
+let view = "agenda";
+function go(v){ view = v; $$(".view").forEach(e => e.classList.toggle("on", e.id === "v-" + v)); $$("#nav a").forEach(a => a.classList.toggle("on", a.dataset.v === v)); (R[v] || (() => {}))(); badges(); window.scrollTo(0,0); }
+$$("#nav a").forEach(a => a.onclick = () => go(a.dataset.v));
+let tt; function toast(m){ const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), 2600); }
+function openModal(h){ $("#mbody").innerHTML = h; $("#modal").classList.add("on"); }
+function closeModal(){ $("#modal").classList.remove("on"); }
+$("#modal").onclick = e => { if (e.target.id === "modal") closeModal(); };
+let typing = null;
+function typeInto(el, text, done){ el.value = ""; let i = 0; clearInterval(typing); typing = setInterval(() => { el.value += text.slice(i, i + 4); i += 4; if (i >= text.length){ clearInterval(typing); done && done(); } }, 14); }
+
+/* ---------- Dados ---------- */
+const VETS = ["Dra. Inês Carvalho", "Dr. Tiago Moura"];
+const A = [
+ {id:1,n:"Bolinha",sp:"Cão",br:"Labrador",age:"6 anos",w:31.2,chip:"620098100123456",o:"Ana Lopes",tel:"912 345 678",nif:"234567890",vac:[["Raiva","2026-11-08"],["Polivalente","2027-03-02"]],hist:["2026-05-10 · Otite externa, tratamento tópico","2025-11-08 · Vacina da raiva"]},
+ {id:2,n:"Mia",sp:"Gato",br:"Europeu comum",age:"3 anos",w:4.1,chip:"620098100654321",o:"Rui Gomes",tel:"936 111 222",nif:"198765432",vac:[["Trivalente felina","2026-11-15"]],hist:["2026-02-03 · Esterilização"]},
+ {id:3,n:"Thor",sp:"Cão",br:"Pastor alemão",age:"9 anos",w:38.0,chip:"620098100777888",o:"Carla Dias",tel:"961 222 333",nif:"287654321",vac:[["Desparasitação","2026-10-30"]],hist:["2026-08-21 · Displasia da anca, anti-inflamatório"]},
+ {id:4,n:"Kiwi",sp:"Ave",br:"Periquito",age:"2 anos",w:0.04,chip:"—",o:"Pedro Neves",tel:"917 333 444",nif:"245678123",vac:[],hist:["2026-06-01 · Corte de unhas"]},
+ {id:5,n:"Luna",sp:"Gato",br:"Siamês",age:"11 anos",w:3.6,chip:"620098100999000",o:"Sofia Reis",tel:"938 444 555",nif:"276543210",vac:[["Trivalente felina","2026-11-20"],["Desparasitação","2026-11-02"]],hist:["2026-10-25 · Internada: agudização de doença renal crónica","2026-09-12 · Análises: insuficiência renal ligeira"]},
+ {id:7,n:"Nina",sp:"Cão",br:"Cavalier King Charles",age:"8 anos",w:9.2,chip:"620098100135790",o:"Marta Silva",tel:"925 777 888",nif:"256789012",vac:[["Polivalente","2027-01-14"]],hist:["2026-09-30 · Sopro detetado em consulta de vacinação"]},
+ {id:6,n:"Max",sp:"Cão",br:"Bulldog francês",age:"4 anos",w:12.4,chip:"620098100246810",o:"João Fonseca",tel:"914 555 666",nif:"223344556",vac:[["Polivalente","2026-10-12"]],hist:["2026-10-26 · Internado: gastroenterite aguda, vómitos"]}
+];
+const ab = id => A.find(a => a.id === id);
+
+const AG = [
+ {vet:VETS[0],slots:[["09:00",1,"Consulta de rotina","Geral"],["10:00",3,"Reavaliação da anca","Ortopedia"],["11:30",5,"Controlo renal","Geral"]]},
+ {vet:VETS[1],slots:[["09:30",2,"Vacinação","Geral"],["11:00",7,"Sopro detetado — ecocardiografia","Cardiologia"],["15:00",1,"Prurido crónico","Dermatologia"]]},
+ {vet:"Sala de cirurgia",slots:[["14:00",2,"Destartarização","Cirurgia"]]}
+];
+
+const SPECS = {
+ "Geral": [],
+ "Cardiologia": [["Sopro (grau 1–6)","3/6, sistólico, foco mitral"],["Frequência cardíaca (bpm)","132"],["Ritmo","Sinusal regular"],["Ecocardiografia","Espessamento da válvula mitral, AE/Ao 1,7"]],
+ "Dermatologia": [["Distribuição das lesões","Face ventral, axilas, região perianal"],["Prurido (0–10)","7"],["Citologia","Malassezia +++"],["Raspagem / tricograma","Negativo para ácaros"]],
+ "Neurologia": [["Estado mental","Alerta"],["Marcha","Ataxia ligeira dos posteriores"],["Reações posturais","Diminuídas no posterior esquerdo"],["Localização provável","T3–L3"]],
+ "Oftalmologia": [["Schirmer OD / OE (mm/min)","18 / 9"],["Fluoresceína","Negativa"],["PIO OD / OE (mmHg)","16 / 17"],["Fundo do olho","Sem alterações"]],
+ "Ortopedia": [["Membro afetado","Posterior direito"],["Claudicação (0–5)","2"],["Testes","Ortolani negativo, dor à extensão da anca"],["Imagiologia","Rx: alterações degenerativas bilaterais"]],
+ "Cirurgia": [["Procedimento","Destartarização com extração do 108"],["Anestesia","Isoflurano, ASA II"],["Duração","45 min"],["Complicações","Nenhuma"]]
+};
+
+const CAT = [["Consulta geral",35],["Consulta de especialidade",55],["Consulta de reavaliação",25],["Vacina da raiva",30],["Vacina polivalente",38],["Desparasitação interna",12],["Hemograma",35],["Bioquímica (painel 8)",45],["Raio-X (2 projeções)",60],["Ecografia abdominal",70],["Ecocardiografia",90],["ECG",40],["Internamento (diária)",45],["Fluidoterapia (dia)",25],["Destartarização",120],["Anestesia geral",80]];
+const catPrice = n => (CAT.find(c => c[0] === n) || [0,0])[1];
+
+// Produtos (doses ilustrativas)
+const P = [
+ {id:"p1",n:"Meloxicam 1,5 mg/ml suspensão oral",lote:"L2391",val:"2027-03-01",stock:4,min:5,price:18,mgkg:0.1,conc:1.5,un:"ml"},
+ {id:"p2",n:"Amoxicilina + ác. clavulânico 250 mg comp.",lote:"AC8812",val:"2027-06-15",stock:40,min:20,price:1.2,mgkg:12.5,conc:250,un:"comp."},
+ {id:"p3",n:"Maropitant 10 mg/ml injetável",lote:"MP0193",val:"2026-11-20",stock:3,min:2,price:22,mgkg:1,conc:10,un:"ml"},
+ {id:"p4",n:"Prednisolona 5 mg comp.",lote:"PR5520",val:"2027-09-30",stock:60,min:30,price:0.4,mgkg:0.5,conc:5,un:"comp."},
+ {id:"p5",n:"Omeprazol 10 mg cáps.",lote:"OM1102",val:"2027-01-10",stock:12,min:15,price:0.8,mgkg:1,conc:10,un:"cáps."},
+ {id:"p6",n:"Gabapentina 100 mg cáps.",lote:"GB7731",val:"2027-04-04",stock:30,min:10,price:0.9,mgkg:10,conc:100,un:"cáps."},
+ {id:"p7",n:"Lactato de Ringer 500 ml",lote:"RL0042",val:"2028-02-01",stock:18,min:10,price:4.5,mgkg:0,conc:0,un:"saco"},
+ {id:"p8",n:"Vacina antirrábica",lote:"VR3310",val:"2026-11-10",stock:6,min:5,price:30,mgkg:0,conc:0,un:"dose"}
+];
+const pb = id => P.find(p => p.id === id);
+function doseOf(p, w){
+  if (!p.mgkg) return null;
+  const mg = p.mgkg * w, q = mg / p.conc;
+  return {mg, q: p.un === "ml" ? q.toFixed(2).replace(".", ",") + " ml" : (Math.round(q * 4) / 4).toString().replace(".", ",") + " " + p.un};
+}
+const M = [["2026-10-26 18:10","p3","1,2 ml","Max",VETS[1]],["2026-10-26 18:15","p7","1 saco","Max",VETS[1]],["2026-10-25 12:30","p7","1 saco","Luna",VETS[0]]];
+function logMov(pid, qty, animal, vet){ M.unshift([TODAY + " " + now(), pid, qty, animal, vet || VETS[0]]); }
+
+// Exames
+const EXT = {
+ "Hemograma": [["Hematócrito","%",37,55],["Leucócitos","10⁹/L",6,17],["Plaquetas","10⁹/L",200,500],["Hemoglobina","g/dL",12,18]],
+ "Bioquímica (painel 8)": [["Ureia","mg/dL",20,60],["Creatinina","mg/dL",0.5,1.6],["ALT","U/L",10,100],["Fosfatase alcalina","U/L",20,150],["Glicose","mg/dL",70,140],["Proteínas totais","g/dL",5.4,7.6]],
+ "Raio-X (2 projeções)": "txt", "Ecografia abdominal": "txt", "Ecocardiografia": "txt", "ECG": "txt"
+};
+const SAMPLE = {
+ "Hemograma": [42,19.4,310,14.1],
+ "Bioquímica (painel 8)": [88,2.4,64,110,98,6.8],
+ "Raio-X (2 projeções)": "Projeções LL e VD. Sinais de doença articular degenerativa bilateral da anca. Sem lesões ósseas agressivas.",
+ "Ecografia abdominal": "Rins com perda de diferenciação corticomedular. Restantes órgãos sem alterações relevantes.",
+ "Ecocardiografia": "Degenerescência mixomatosa da mitral, regurgitação moderada. AE/Ao 1,7. Estadio B2 (ACVIM).",
+ "ECG": "Ritmo sinusal, FC 130 bpm. Sem arritmias."
+};
+const E = [
+ {id:1,aid:5,t:"Bioquímica (painel 8)",d:"2026-10-25",vet:VETS[0],st:"Resultado",res:[95,3.1,40,80,110,7.0]},
+ {id:2,aid:5,t:"Hemograma",d:"2026-10-25",vet:VETS[0],st:"Resultado",res:[31,11.2,260,10.4]},
+ {id:3,aid:6,t:"Ecografia abdominal",d:"2026-10-26",vet:VETS[1],st:"Pendente"},
+ {id:4,aid:3,t:"Raio-X (2 projeções)",d:TODAY,vet:VETS[0],st:"Pendente"}
+];
+let eFilter = "Todos";
+
+// Internamento
+const H = [
+ {aid:6,box:"Box 1",mot:"Gastroenterite aguda, vómitos",since:"2026-10-26",vet:VETS[1],
+  tr:[{pid:"p7",m:"Fluidoterapia Lactato de Ringer",d:"30 ml/h",via:"IV",h:[8,16,24],g:{8:"08:05"}},
+      {pid:"p3",m:"Maropitant",d:"1,2 ml",via:"SC",h:[10],g:{}},
+      {pid:"p5",m:"Omeprazol",d:"1 cáps.",via:"PO",h:[8,20],g:{8:"08:10"}}],
+  vit:[["2026-10-26 20:00","39,2","120","28"],[TODAY + " 08:00","38,8","110","24"]]},
+ {aid:5,box:"Box 3",mot:"Agudização de doença renal crónica",since:"2026-10-25",vet:VETS[0],
+  tr:[{pid:"p7",m:"Fluidoterapia Lactato de Ringer",d:"10 ml/h",via:"IV",h:[8,16,24],g:{8:"08:00"}},
+      {pid:"p3",m:"Maropitant",d:"0,36 ml",via:"SC",h:[12],g:{}}],
+  vit:[[TODAY + " 08:00","38,4","180","30"]]}
+];
+
+// Orçamentos e faturas
+const O = [{n:"ORC 2026/044",aid:2,desc:"Destartarização com anestesia geral e possível extração",items:[["Destartarização",120],["Anestesia geral",80],["Hemograma",35]],min:235,max:290,st:"Aceite"}];
+const F = [{n:"FT 2026/381",c:"Carla Dias",nif:"287654321",t:52.00,s:"Emitida",src:"Consulta",lines:[["Consulta de reavaliação",25],["Meloxicam 1,5 mg/ml suspensão oral",18],["Desparasitação interna",9]]}];
+let fSeq = 382, oSeq = 45;
+
+/* ---------- Agenda ---------- */
+function stockAlerts(){ return P.filter(p => p.stock < p.min || days(p.val) <= 30).length; }
+function badges(){
+  const pe = E.filter(e => e.st === "Pendente").length, sa = stockAlerts();
+  $("#nExa").textContent = pe || ""; $("#nExa").style.display = pe ? "" : "none";
+  $("#nInt").textContent = H.length || ""; $("#nInt").style.display = H.length ? "" : "none";
+  $("#nStk").textContent = sa || ""; $("#nStk").style.display = sa ? "" : "none";
+  const pp = PED.filter(p => !p.st).length; $("#nPed").textContent = pp || ""; $("#nPed").style.display = pp ? "" : "none";
+  const ll = A.reduce((n,a) => n + a.vac.filter(([v,d]) => days(d) <= 30 && !sent[a.id + v]).length, 0); $("#nLem").textContent = ll || ""; $("#nLem").style.display = ll ? "" : "none";
+}
+function renderAgenda(){
+  const k = [["Consultas hoje", AG.reduce((s,c) => s + c.slots.length, 0), "agenda"],["Internados", H.length, "intern"],["Exames pendentes", E.filter(e => e.st === "Pendente").length, "exames"],["Alertas de stock", stockAlerts(), "farm"]];
+  $("#kpis").innerHTML = k.map(([l,v,t]) => `<div class="card kpi click" onclick="go('${t}')"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+  $("#agrid").innerHTML = AG.map(c => `<div class="card"><h3>${esc(c.vet)}</h3>${c.slots.map(([h,id,m,s]) => { const a = ab(id);
+    return `<div class="slot click" onclick="openCons(${id},'${s}')"><div class="row"><b>${h}</b> · ${esc(a.n)} <span class="sp"></span><span class="chip ${s !== "Geral" ? "acc" : ""}">${s}</span></div><div class="muted">${esc(m)} · ${esc(a.o)}</div></div>`; }).join("")}</div>`).join("");
+}
+
+/* ---------- Animais ---------- */
+function renderAnimais(sel){
+  const q = $("#aq").value.toLowerCase();
+  $("#atb").innerHTML = A.filter(a => [a.n,a.o,a.tel,a.chip].join(" ").toLowerCase().includes(q)).map(a => `<tr class="click" onclick="ficha(${a.id})"><td><b>${esc(a.n)}</b> ${H.some(h => h.aid === a.id) ? '<span class="chip warn">Internado</span>' : ""}</td><td>${esc(a.o)}</td><td>${a.sp}</td></tr>`).join("");
+  if (sel) ficha(sel);
+}
+function ficha(id){
+  const a = ab(id), ex = E.filter(e => e.aid === id), hi = H.find(h => h.aid === id);
+  $("#afi").innerHTML = `<div class="row"><div class="av">${a.n[0]}</div><div><h3 style="margin:0">${esc(a.n)}</h3><div class="muted">${a.sp} · ${esc(a.br)} · ${a.age} · ${kg(a.w)}</div></div><span class="sp"></span><button class="sm pri" onclick="openCons(${a.id})">Nova consulta</button></div>
+  ${hi ? `<div class="warnbox">Internado em ${hi.box} desde ${fmtD(hi.since)} · ${esc(hi.mot)} <a href="#" onclick="go('intern');return false">Ver</a></div>` : ""}
+  <label class="f">Microchip</label><div>${a.chip} ${a.chip !== "—" ? `<span class="chip good">Registado no SIAC</span>` : ""}</div>
+  <label class="f">Dono</label><div>${esc(a.o)} · ${a.tel} · NIF ${a.nif}</div>
+  <label class="f">Vacinas e desparasitações</label><div>${a.vac.map(([v,d]) => `<span class="chip ${days(d) < 15 ? "warn" : ""}">${esc(v)} — ${fmtD(d)}</span>`).join("") || "<span class='muted'>—</span>"}</div>
+  <label class="f">Exames</label><div>${ex.map(e => `<span class="chip click ${e.st === "Pendente" ? "warn" : "good"}" onclick="verExame(${e.id})">${esc(e.t)} · ${fmtD(e.d)}</span>`).join("") || "<span class='muted'>—</span>"}</div>
+  <label class="f">Histórico</label>${a.hist.map(h => `<div style="padding:5px 0;border-top:1px solid var(--line)">${esc(h)}</div>`).join("")}`;
+}
+$("#aq").oninput = () => renderAnimais();
+
+/* ---------- Consulta ---------- */
+let cur = 1, lines = [], rx = [], reqEx = [];
+$("#cspec").innerHTML = Object.keys(SPECS).map(s => `<option>${s}</option>`).join("");
+$("#csel").innerHTML = CAT.map((c,i) => `<option value="${i}">${esc(c[0])} — ${eur(c[1])}</option>`).join("");
+$("#esel").innerHTML = Object.keys(EXT).map(t => `<option>${esc(t)}</option>`).join("");
+function fillRx(){ $("#rsel").innerHTML = P.filter(p => p.mgkg).map(p => `<option value="${p.id}">${esc(p.n)} (stock ${p.stock})</option>`).join(""); showDose(); }
+function showDose(){
+  const p = pb($("#rsel").value), w = +$("#cw").value || ab(cur).w, d = p && doseOf(p, w);
+  $("#rdose").innerHTML = d ? `Dose sugerida para ${String(w).replace(".", ",")} kg: <b>${d.mg.toFixed(1).replace(".", ",")} mg → ${d.q}</b> <span class="muted">(${String(p.mgkg).replace(".", ",")} mg/kg, ilustrativo)</span>` : "";
+}
+$("#rsel").onchange = showDose; $("#cw").oninput = showDose;
+
+function openCons(id, spec){
+  cur = id; const a = ab(id); spec = spec || "Geral";
+  lines = [[spec === "Geral" ? "Consulta geral" : spec === "Cirurgia" ? "Destartarização" : "Consulta de especialidade", spec === "Geral" ? 35 : spec === "Cirurgia" ? 120 : 55]];
+  rx = []; reqEx = [];
+  $("#cav").textContent = a.n[0]; $("#cname").textContent = a.n;
+  $("#cinfo").textContent = `${a.sp} · ${a.br} · ${a.age} · Dono: ${a.o}`;
+  ["#cs","#co","#ca","#cp"].forEach(s => $(s).value = ""); $("#cw").value = a.w;
+  $("#cspec").value = spec; renderSpec(); fillRx(); renderLines(); renderRx(); renderReqEx(); go("consulta");
+}
+function renderSpec(){
+  const s = $("#cspec").value, f = SPECS[s];
+  $("#cspecbox").style.display = f.length ? "" : "none";
+  $("#cspecbox").innerHTML = f.length ? `<h3>${s} — campos da especialidade</h3><div class="spec">${f.map(([l],i) => `<div><label class="f">${esc(l)}</label><input id="sf${i}"></div>`).join("")}</div>` : "";
+}
+$("#cspec").onchange = renderSpec;
+function renderLines(){
+  $("#ctb").innerHTML = lines.map((l,i) => `<tr><td>${esc(l[0])}</td><td class="r">${eur(l[1])}</td><td style="width:30px"><button class="sm" onclick="lines.splice(${i},1);renderLines()">×</button></td></tr>`).join("");
+  $("#ctot").textContent = eur(lines.reduce((a,l) => a + l[1], 0));
+}
+function renderRx(){
+  $("#rtb").innerHTML = rx.map((r,i) => `<tr><td>${esc(r.n)}<div class="muted small">${r.q} · ${r.pos}</div></td><td style="width:30px"><button class="sm" onclick="rmRx(${i})">×</button></td></tr>`).join("") || `<tr><td class="muted small" style="border:none">Sem prescrição.</td></tr>`;
+}
+function rmRx(i){ const r = rx[i]; rx.splice(i,1); const li = lines.findIndex(l => l[0] === r.n); if (li > -1) lines.splice(li,1); renderRx(); renderLines(); }
+$("#radd").onclick = () => {
+  const p = pb($("#rsel").value), w = +$("#cw").value || ab(cur).w, d = doseOf(p, w);
+  const pos = p.un === "ml" && p.n.includes("injet") ? "Administração única na clínica" : p.id === "p1" ? "1x/dia durante 5 dias, com comida" : "2x/dia durante 7 dias";
+  rx.push({pid:p.id, n:p.n, q:d.q, pos}); lines.push([p.n, p.price]); renderRx(); renderLines(); toast("Prescrito. Stock e registo atualizados ao fechar a consulta.");
+};
+function renderReqEx(){ $("#elist").innerHTML = reqEx.length ? reqEx.map(t => `<span class="chip warn">${esc(t)} — pedido</span>`).join("") : `<span class="muted">Sem exames pedidos.</span>`; }
+$("#eadd").onclick = () => { const t = $("#esel").value; reqEx.push(t); lines.push([t, catPrice(t)]); renderReqEx(); renderLines(); };
+$("#cadd").onclick = () => { lines.push(CAT[+$("#csel").value]); renderLines(); };
+
+const DICT = {
+ "Geral": a => [`Dono refere que o ${a.n} anda a coçar a orelha esquerda há 4 dias. Come e bebe normalmente.`,`Temperatura 38,6 °C. Canal auditivo esquerdo eritematoso, com cerúmen escuro. Restante exame sem alterações.`,`Otite externa esquerda, provavelmente por leveduras.`,`Limpeza auricular. Tratamento tópico 2x/dia durante 10 dias. Reavaliação em 2 semanas.`],
+ "Cardiologia": a => [`Dono nota que o ${a.n} se cansa mais nos passeios e tosse à noite.`,`Sopro sistólico 3/6 em foco mitral. FC 132 bpm, ritmo sinusal. Mucosas rosadas, TRC < 2 s.`,`Doença mixomatosa da válvula mitral, estadio B2 a confirmar por ecocardiografia.`,`Ecocardiografia hoje. Discutir início de pimobendan conforme resultado. Reavaliação em 3 meses.`],
+ "Dermatologia": a => [`Prurido intenso há 2 meses, sobretudo nas patas e axilas. Piora na primavera.`,`Eritema e liquenificação nas axilas e região ventral. Citologia com Malassezia abundante.`,`Dermatite atópica com sobrecrescimento de Malassezia.`,`Banhos com clorexidina/miconazol 2x/semana. Controlo do prurido. Reavaliação em 4 semanas.`],
+ "Neurologia": a => [`Dono refere que o ${a.n} arrasta a pata traseira esquerda desde ontem.`,`Alerta. Ataxia ligeira dos posteriores, reações posturais diminuídas no posterior esquerdo. Dor à palpação toracolombar.`,`Mielopatia T3–L3, suspeita de hérnia discal.`,`Repouso em jaula 4 semanas, analgesia. Discutir RM se não houver melhoria.`],
+ "Oftalmologia": a => [`Olho esquerdo com secreção espessa há uma semana.`,`Schirmer OD 18, OE 9 mm/min. Fluoresceína negativa. PIO normal.`,`Queratoconjuntivite seca no olho esquerdo.`,`Lágrima artificial e ciclosporina tópica. Reavaliar Schirmer em 4 semanas.`],
+ "Ortopedia": a => [`O ${a.n} tem mais dificuldade a levantar-se de manhã. Melhora depois de andar.`,`Claudicação 2/5 do posterior direito. Dor à extensão da anca, Ortolani negativo.`,`Doença articular degenerativa da anca, associada a displasia.`,`Rx de controlo. Anti-inflamatório, controlo do peso e exercício moderado. Reavaliação em 1 mês.`],
+ "Cirurgia": a => [`Admitido para destartarização programada. Em jejum desde as 20h.`,`Tártaro grau 3, gengivite. Dente 108 com mobilidade.`,`Doença periodontal com indicação de extração do 108.`,`Destartarização e extração sob anestesia geral. Alta ao fim do dia. Analgesia 3 dias.`]
+};
+$("#cdict").onclick = () => {
+  const a = ab(cur), s = $("#cspec").value, t = DICT[s](a), f = SPECS[s];
+  toast("A transcrever o ditado…");
+  typeInto($("#cs"), t[0], () => typeInto($("#co"), t[1], () => typeInto($("#ca"), t[2], () => typeInto($("#cp"), t[3], () => {
+    f.forEach(([,v],i) => { const el = $("#sf" + i); if (el) el.value = v; });
+    toast("Nota preenchida. Reveja antes de guardar.");
+  }))));
+};
+function consultaLabel(){ return $("#ca").value || ($("#cspec").value === "Geral" ? "Consulta" : "Consulta de " + $("#cspec").value.toLowerCase()); }
+function commitConsulta(){
+  const a = ab(cur);
+  rx.forEach(r => { const p = pb(r.pid); p.stock = Math.max(0, p.stock - 1); logMov(r.pid, r.q, a.n); });
+  reqEx.forEach(t => E.unshift({id: Date.now() + Math.random(), aid: a.id, t, d: TODAY, vet: VETS[0], st: "Pendente"}));
+  a.hist.unshift(`${TODAY} · ${$("#cspec").value !== "Geral" ? "[" + $("#cspec").value + "] " : ""}${consultaLabel()}`);
+  if (+$("#cw").value) a.w = +$("#cw").value;
+}
+$("#cclose").onclick = () => {
+  const a = ab(cur), t = lines.reduce((s,l) => s + l[1], 0);
+  commitConsulta();
+  F.unshift({n:`FT 2026/${fSeq++}`, c:a.o, nif:a.nif, t, s:"Rascunho", src:"Consulta", lines:[...lines]});
+  toast("Consulta fechada. Fatura criada em rascunho" + (reqEx.length ? ", exames pedidos." : ".")); go("fatura");
+};
+$("#corc").onclick = () => {
+  const a = ab(cur), t = lines.reduce((s,l) => s + l[1], 0);
+  O.unshift({n:`ORC 2026/0${oSeq++}`, aid:a.id, desc: consultaLabel(), items:[...lines], min:t, max:Math.round(t * 1.25), st:"Pendente"});
+  toast("Orçamento criado. Pode enviá-lo ao dono para aprovação."); go("orc");
+};
+$("#cint").onclick = () => {
+  const a = ab(cur);
+  if (H.some(h => h.aid === a.id)) { toast(`${a.n} já está internado.`); go("intern"); return; }
+  commitConsulta();
+  const used = H.map(h => h.box), box = ["Box 1","Box 2","Box 3","Box 4"].find(b => !used.includes(b)) || "Box 5";
+  H.push({aid:a.id, box, mot: $("#ca").value || "Em observação", since: TODAY, vet: VETS[0],
+    tr: rx.map(r => ({pid:r.pid, m:r.n, d:r.q, via:"—", h:[...new Set([HOURS.find(x => x > hourNow()) || 8, 20])], g:{}})), vit:[]});
+  a.hist.unshift(`${TODAY} · Internado: ${$("#ca").value || "em observação"}`);
+  toast(`${a.n} internado em ${box}.`); go("intern");
+};
+
+/* ---------- Exames ---------- */
+function renderExames(){
+  const tabs = ["Todos","Pendente","Resultado"];
+  $("#etabs").innerHTML = tabs.map(t => `<button class="sm ${t === eFilter ? "on" : ""}" onclick="eFilter='${t}';renderExames()">${t === "Resultado" ? "Com resultado" : t === "Pendente" ? "Pendentes" : t}</button>`).join("");
+  $("#etb").innerHTML = E.filter(e => eFilter === "Todos" || e.st === eFilter).map(e => { const a = ab(e.aid);
+    return `<tr><td>${fmtD(e.d)}</td><td><b>${esc(a.n)}</b><div class="muted small">${a.sp}</div></td><td>${esc(e.t)}</td><td>${esc(e.vet)}</td>
+    <td><span class="chip ${e.st === "Pendente" ? "warn" : "good"}">${e.st === "Pendente" ? "Pendente" : "Resultado"}</span>${e.st === "Resultado" && flags(e) ? ` <span class="chip bad">${flags(e)} fora do intervalo</span>` : ""}</td>
+    <td>${e.st === "Pendente" ? `<button class="sm pri" onclick="registar(${e.id})">Importar resultado</button>` : `<button class="sm" onclick="verExame(${e.id})">Ver</button>`}</td></tr>`; }).join("") || `<tr><td colspan="6" class="muted">Sem exames.</td></tr>`;
+}
+function flags(e){ const t = EXT[e.t]; if (t === "txt") return 0; return t.filter(([, ,lo,hi],i) => e.res[i] < lo || e.res[i] > hi).length; }
+function registar(id){ const e = E.find(x => x.id === id); e.res = SAMPLE[e.t]; e.st = "Resultado"; renderExames(); badges(); toast("Resultado importado do analisador (simulado)."); verExame(id); }
+function verExame(id){
+  const e = E.find(x => x.id === id), a = ab(e.aid), t = EXT[e.t];
+  if (e.st === "Pendente") { openModal(`<h3>${esc(e.t)} — ${esc(a.n)}</h3><p class="muted">Pedido em ${fmtD(e.d)} por ${esc(e.vet)}. A aguardar resultado.</p>`); return; }
+  const body = t === "txt" ? `<p>${esc(e.res)}</p><div class="warnbox">No produto real: imagens DICOM / PDF do equipamento anexadas aqui.</div>` :
+    `<table><thead><tr><th>Parâmetro</th><th class="r">Resultado</th><th>Unid.</th><th>Referência</th></tr></thead><tbody>${t.map(([p,u,lo,hi],i) => { const v = e.res[i], c = v > hi ? "hi" : v < lo ? "lo" : "";
+      return `<tr><td>${p}</td><td class="r ${c}">${String(v).replace(".", ",")} ${c === "hi" ? "↑" : c === "lo" ? "↓" : ""}</td><td class="muted">${u}</td><td class="muted">${String(lo).replace(".", ",")}–${String(hi).replace(".", ",")}</td></tr>`; }).join("")}</tbody></table>`;
+  openModal(`<h3>${esc(e.t)} — ${esc(a.n)}</h3><p class="muted">${a.sp} · ${esc(a.br)} · ${fmtD(e.d)} · ${esc(e.vet)}</p>${body}`);
+}
+
+/* ---------- Internamento ---------- */
+const HOURS = [8,10,12,14,16,18,20,22,24];
+function renderIntern(){
+  if (!H.length) { $("#igrid").innerHTML = `<div class="card muted">Sem animais internados.</div>`; return; }
+  const hn = hourNow();
+  $("#igrid").innerHTML = H.map((h,hi) => { const a = ab(h.aid), dias = Math.max(1, days(TODAY) - days(h.since) + 1);
+    return `<div class="card"><div class="row"><div class="av">${a.n[0]}</div><div><h3 style="margin:0">${esc(a.n)} <span class="chip">${h.box}</span></h3><div class="muted">${a.sp} · ${kg(a.w)} · ${esc(h.mot)} · desde ${fmtD(h.since)} (${dias} ${dias > 1 ? "dias" : "dia"}) · ${esc(h.vet)}</div></div><span class="sp"></span>
+      <button class="sm" onclick="addTr(${hi})">+ Tratamento</button><button class="sm" onclick="addVit(${hi})">Registar sinais vitais</button><button class="sm pri" onclick="alta(${hi})">Dar alta</button></div>
+      <div class="tw" style="margin-top:10px"><table><thead><tr><th>Tratamento</th><th>Dose</th><th>Via</th>${HOURS.map(x => `<th class="hcell">${String(x % 24).padStart(2,"0")}h</th>`).join("")}</tr></thead><tbody>
+      ${h.tr.map((t,ti) => `<tr><td>${esc(t.m)}</td><td>${esc(t.d)}</td><td>${t.via}</td>${HOURS.map(x => { if (!t.h.includes(x)) return `<td class="hcell"></td>`;
+        const g = t.g[x], late = !g && x < hn;
+        return `<td class="hcell"><button class="hb ${g ? "done" : late ? "late" : ""}" title="${g ? "Administrado às " + g : late ? "Em atraso" : "Por administrar"}" onclick="give(${hi},${ti},${x})">${g ? "✓" : "○"}</button></td>`; }).join("")}</tr>`).join("") || `<tr><td colspan="${3 + HOURS.length}" class="muted">Sem tratamentos.</td></tr>`}
+      </tbody></table></div>
+      <label class="f">Sinais vitais</label><div class="tw"><table><thead><tr><th>Registo</th><th>Temp. (°C)</th><th>FC (bpm)</th><th>FR (rpm)</th></tr></thead><tbody>
+      ${h.vit.slice().reverse().map(v => `<tr><td>${fmtD(v[0].slice(0,10))} ${v[0].slice(11)}</td><td>${v[1]}</td><td>${v[2]}</td><td>${v[3]}</td></tr>`).join("") || `<tr><td colspan="4" class="muted">Sem registos.</td></tr>`}</tbody></table></div></div>`; }).join("");
+}
+function give(hi, ti, x){
+  const h = H[hi], t = h.tr[ti], a = ab(h.aid);
+  if (t.g[x]) { delete t.g[x]; toast("Administração anulada."); }
+  else { t.g[x] = now(); if (t.pid) logMov(t.pid, t.d, a.n, h.vet); toast(`${t.m} administrado a ${a.n}. Registado.`); }
+  renderIntern();
+}
+function addVit(hi){ const h = H[hi], r = (b,s) => (b + (Math.random() - .5) * s);
+  h.vit.push([TODAY + " " + now(), r(38.6,0.8).toFixed(1).replace(".", ","), Math.round(r(115,30)), Math.round(r(26,8))]); renderIntern(); toast("Sinais vitais registados."); }
+function addTr(hi){
+  const h = H[hi], a = ab(h.aid);
+  openModal(`<h3>Novo tratamento — ${esc(a.n)}</h3><label class="f">Medicamento</label><select id="ntp">${P.filter(p => p.mgkg).map(p => `<option value="${p.id}">${esc(p.n)}</option>`).join("")}</select>
+  <div class="grid g2"><div><label class="f">Via</label><select id="ntv"><option>PO</option><option>SC</option><option>IV</option><option>IM</option></select></div>
+  <div><label class="f">Horas</label><select id="nth"><option value="8,20">2x/dia (08h, 20h)</option><option value="8,16,24">3x/dia (08h, 16h, 24h)</option><option value="10">1x/dia (10h)</option></select></div></div>
+  <div class="dose" id="ntd"></div><div class="row" style="margin-top:12px"><span class="sp"></span><button class="pri" id="ntok">Adicionar ao plano</button></div>`);
+  const upd = () => { const d = doseOf(pb($("#ntp").value), a.w); $("#ntd").innerHTML = `Dose para ${String(a.w).replace(".", ",")} kg: <b>${d.q}</b> <span class="muted">(ilustrativo)</span>`; };
+  $("#ntp").onchange = upd; upd();
+  $("#ntok").onclick = () => { const p = pb($("#ntp").value); h.tr.push({pid:p.id, m:p.n, d:doseOf(p, a.w).q, via:$("#ntv").value, h:$("#nth").value.split(",").map(Number), g:{}}); closeModal(); renderIntern(); toast("Tratamento adicionado ao plano."); };
+}
+function alta(hi){
+  const h = H[hi], a = ab(h.aid), dias = Math.max(1, days(TODAY) - days(h.since) + 1);
+  const ls = [[`Internamento (diária) × ${dias}`, 45 * dias]];
+  if (h.tr.some(t => t.pid === "p7")) ls.push([`Fluidoterapia × ${dias}`, 25 * dias]);
+  h.tr.filter(t => t.pid && t.pid !== "p7").forEach(t => { const n = Object.keys(t.g).length; if (n) ls.push([`${t.m} × ${n}`, pb(t.pid).price * n]); });
+  const tot = ls.reduce((s,l) => s + l[1], 0);
+  F.unshift({n:`FT 2026/${fSeq++}`, c:a.o, nif:a.nif, t:tot, s:"Rascunho", src:"Internamento", lines:ls});
+  a.hist.unshift(`${TODAY} · Alta de internamento (${dias} ${dias > 1 ? "dias" : "dia"}): ${h.mot}`);
+  H.splice(hi, 1); renderIntern(); badges();
+  openModal(`<h3>Alta de ${esc(a.n)}</h3><p>Fatura de internamento criada em rascunho: <b>${eur(tot)}</b>.</p><div class="row"><button onclick="closeModal();go('fatura')">Ver fatura</button><button class="pri" onclick="closeModal();relatorioPara(${a.id},'Relatório de alta de internamento')">Gerar relatório de alta</button></div>`);
+}
+
+/* ---------- Relatórios ---------- */
+function renderRelat(){ const v = $("#ranimal").value; $("#ranimal").innerHTML = A.map(a => `<option value="${a.id}">${esc(a.n)} — ${esc(a.o)}</option>`).join(""); if (v) $("#ranimal").value = v; }
+function relatorioPara(id, tipo){ go("relat"); $("#ranimal").value = id; $("#rtype").value = tipo; $("#rgen").click(); }
+$("#rgen").onclick = () => {
+  const a = ab(+$("#ranimal").value), tipo = $("#rtype").value, ex = E.filter(e => e.aid === a.id && e.st === "Resultado");
+  const exTxt = ex.length ? ex.map(e => { const t = EXT[e.t]; if (t === "txt") return `- ${e.t} (${fmtD(e.d)}): ${e.res}`;
+    const ab_ = t.map(([p,u,lo,hi],i) => e.res[i] > hi ? `${p} ↑ ${String(e.res[i]).replace(".", ",")} ${u}` : e.res[i] < lo ? `${p} ↓ ${String(e.res[i]).replace(".", ",")} ${u}` : null).filter(Boolean);
+    return `- ${e.t} (${fmtD(e.d)}): ${ab_.length ? ab_.join("; ") : "sem alterações"}`; }).join("\n") : "- Sem exames registados.";
+  const meds = M.filter(m => m[3] === a.n).slice(0,5).map(m => `- ${pb(m[1]).n}: ${m[2]} (${m[0].slice(0,10).split("-").reverse().join("/")})`).join("\n") || "- Sem medicação registada.";
+  const recs = {
+    "Relatório de alta de internamento": "Recomendações para casa:\n- Dieta adequada à condição, em pequenas porções.\n- Manter a medicação prescrita até à reavaliação.\n- Contactar a clínica se houver vómitos, prostração ou falta de apetite.\n- Reavaliação em 5–7 dias.",
+    "Carta de referência para outro centro": "Motivo da referência:\nSolicita-se avaliação complementar e eventual exame de imagem avançado. Ficamos disponíveis para qualquer esclarecimento.",
+    "Relatório de especialidade": "Conclusão da especialidade:\nAchados compatíveis com a avaliação descrita no histórico. Plano terapêutico e reavaliação conforme indicado.",
+    "Relatório de consulta": "Plano:\nConforme nota clínica da última consulta.",
+    "Resumo do historial clínico": ""
+  };
+  const txt = `${tipo.toUpperCase()}\nClínica Veterinária do Rio · ${fmtD(TODAY)}\n\nPaciente: ${a.n} · ${a.sp}, ${a.br} · ${a.age} · ${String(a.w).replace(".", ",")} kg\nMicrochip: ${a.chip}\nTutor: ${a.o} · ${a.tel}\n\nHistórico relevante:\n${a.hist.slice(0,4).map(h => "- " + h.replace(/^(\d{4})-(\d\d)-(\d\d)/, "$3/$2/$1")).join("\n")}\n\nExames complementares:\n${exTxt}\n\nMedicação recente:\n${meds}\n\n${recs[tipo]}\n\nMédico veterinário: ${VETS[0]}`;
+  toast("A gerar relatório…"); typeInto($("#rtxt"), txt, () => toast("Relatório gerado. Reveja antes de enviar."));
+};
+$("#rmail").onclick = () => toast("Relatório enviado por email ao dono (simulado).");
+$("#rpdf").onclick = () => { const a = ab(+$("#ranimal").value); a.hist.unshift(`${TODAY} · ${$("#rtype").value} (PDF)`); toast("Guardado na ficha do animal."); };
+
+/* ---------- Farmácia ---------- */
+function renderFarm(){
+  $("#ptb").innerHTML = P.map(p => { const lo = p.stock < p.min, ex = days(p.val) <= 30;
+    return `<tr><td>${esc(p.n)}</td><td class="muted">${p.lote}</td><td>${fmtD(p.val)}</td><td class="r"><b>${p.stock}</b> <span class="muted small">/ mín. ${p.min}</span></td><td class="r">${eur(p.price)}</td>
+    <td>${lo ? '<span class="chip bad">Stock baixo</span>' : ""}${ex ? `<span class="chip warn">Expira em ${days(p.val)} dias</span>` : ""}${!lo && !ex ? '<span class="chip good">OK</span>' : ""}</td>
+    <td>${lo ? `<button class="sm" onclick="encomendar('${p.id}')">Encomendar</button>` : ""}</td></tr>`; }).join("");
+  $("#mtb").innerHTML = M.map(m => { const p = pb(m[1]); return `<tr><td>${fmtD(m[0].slice(0,10))} ${m[0].slice(11)}</td><td>${esc(p.n)}</td><td class="muted">${p.lote}</td><td>${esc(m[2])}</td><td>${esc(m[3])}</td><td>${esc(m[4])}</td></tr>`; }).join("");
+}
+function encomendar(id){ const p = pb(id); p.stock += p.min * 2; renderFarm(); badges(); toast(`Encomenda enviada ao fornecedor e rececionada (simulado): +${p.min * 2}.`); }
+
+/* ---------- Orçamentos ---------- */
+function renderOrc(){
+  $("#otb").innerHTML = O.map((o,i) => { const a = ab(o.aid);
+    return `<tr><td>${o.n}</td><td><b>${esc(a.n)}</b><div class="muted small">${esc(a.o)}</div></td><td>${esc(o.desc)}</td><td class="r">${eur(o.min)} – ${eur(o.max)}</td>
+    <td><span class="chip ${o.st === "Aceite" ? "good" : o.st === "Faturado" ? "" : "warn"}">${o.st}</span></td>
+    <td class="row" style="border:none;gap:6px"><button class="sm" onclick="verOrc(${i})">Ver</button>${o.st === "Pendente" ? `<button class="sm" onclick="aceitar(${i})">Dono aceitou</button>` : ""}${o.st === "Aceite" ? `<button class="sm pri" onclick="orcFat(${i})">Converter em fatura</button>` : ""}</td></tr>`; }).join("");
+}
+function verOrc(i){ const o = O[i], a = ab(o.aid);
+  openModal(`<h3>${o.n}</h3><p class="muted">${esc(a.n)} · ${esc(a.o)} · NIF ${a.nif}</p><p>${esc(o.desc)}</p><table>${o.items.map(l => `<tr><td>${esc(l[0])}</td><td class="r">${eur(l[1])}</td></tr>`).join("")}<tr><td><b>Estimativa</b></td><td class="r"><b>${eur(o.min)} – ${eur(o.max)}</b></td></tr></table>
+  <p class="muted small">O valor final pode variar consoante a evolução clínica. Validade: 30 dias.</p><div class="row"><span class="sp"></span><button class="pri" onclick="toast('Orçamento enviado ao dono por email e WhatsApp, com link de aceitação (simulado).')">Enviar ao dono</button></div>`); }
+function aceitar(i){ O[i].st = "Aceite"; renderOrc(); toast("Orçamento aceite. Assinatura do dono guardada (simulado)."); }
+function orcFat(i){ const o = O[i], a = ab(o.aid), t = o.items.reduce((s,l) => s + l[1], 0);
+  F.unshift({n:`FT 2026/${fSeq++}`, c:a.o, nif:a.nif, t, s:"Rascunho", src:o.n, lines:[...o.items]}); o.st = "Faturado"; toast("Fatura criada a partir do orçamento."); go("fatura"); }
+
+/* ---------- Faturação ---------- */
+function renderFat(){
+  $("#ftb").innerHTML = F.map((f,i) => `<tr><td>${f.n}</td><td>${esc(f.c)}</td><td>${f.nif}</td><td class="muted">${esc(f.src)}</td><td class="r">${eur(f.t)}</td><td><span class="chip ${f.s === "Emitida" ? "good" : "warn"}">${f.s}</span></td>
+  <td class="row" style="border:none;gap:6px"><button class="sm" onclick="verF(${i})">Ver</button>${f.s !== "Emitida" ? `<button class="sm pri" onclick="emit(${i})">Emitir</button>` : ""}</td></tr>`).join("");
+}
+function emit(i){ F[i].s = "Emitida"; renderFat(); toast("Fatura emitida e enviada por email (simulado)."); }
+function verF(i){ const f = F[i];
+  openModal(`<h3>${f.n} ${f.s !== "Emitida" ? '<span class="chip warn">Rascunho</span>' : ""}</h3><p class="muted">Clínica Veterinária do Rio · Cliente: ${esc(f.c)} · NIF ${f.nif}</p><table>${f.lines.map(l => `<tr><td>${esc(l[0])}</td><td class="r">${eur(l[1])}</td></tr>`).join("")}<tr><td><b>Total (IVA incluído, taxa ilustrativa)</b></td><td class="r"><b>${eur(f.t)}</b></td></tr></table><p class="muted small">Pré-visualização. O documento fiscal real terá ATCUD e QR code.</p>`); }
+
+/* ---------- Lembretes ---------- */
+const sent = {};
+function renderLemb(){
+  const rows = A.flatMap(a => a.vac.filter(([,d]) => days(d) <= 30).map(([v,d]) => ({a, v, d})));
+  $("#ltb").innerHTML = rows.map(r => { const k = r.a.id + r.v;
+    return `<tr><td><b>${esc(r.a.n)}</b></td><td>${esc(r.a.o)}<div class="muted small">${r.a.tel}</div></td><td>${esc(r.v)}</td><td>${fmtD(r.d)} <span class="chip ${days(r.d) < 10 ? "bad" : "warn"}">${days(r.d) < 0 ? "em atraso " + -days(r.d) + " dias" : days(r.d) + " dias"}</span></td>
+    <td>${sent[k] ? `<span class="chip good">Enviado ${sent[k]}</span>` : `<button class="sm" onclick="send('${k}')">WhatsApp</button> <button class="sm" onclick="send('${k}')">SMS</button>`}</td></tr>`; }).join("");
+}
+function send(k){ sent[k] = now(); renderLemb(); badges(); const r = A.find(a => k.startsWith(String(a.id)));
+  openModal(`<h3>Mensagem enviada por WhatsApp (simulado)</h3><div class="dose" style="white-space:pre-wrap">Olá ${esc(r.o.split(" ")[0])}! Aqui é a Clínica Veterinária do Rio. Está na hora da ${esc(k.slice(String(r.id).length).toLowerCase())} do ${esc(r.n)}. Pode marcar aqui, em 30 segundos: clinora.vet/marcar/clinica-do-rio\nObrigado!</div><p class="muted small">No produto real abre o WhatsApp da clínica com a mensagem pronta e fica registado quem enviou e quando.</p>`); }
+$("#lall").onclick = () => { A.forEach(a => a.vac.forEach(([v,d]) => { if (days(d) <= 30) sent[a.id + v] ||= now(); })); renderLemb(); badges(); toast("Todos os lembretes enviados (simulado)."); };
+
+
+/* ---------- Migração QVET ---------- */
+const MENT = [["Donos",1248],["Animais",1912],["Consultas e notas clínicas",14530],["Vacinas e desparasitações",4210],["Exames e anexos",1105],["Faturas (histórico)",9874],["Produtos e stock",342],["Marcações futuras",87]];
+const MCONF = [
+ {t:"Dono duplicado",d:"«Ana Lopes» e «Ana M. Lopes» têm o mesmo NIF 234567890 e o mesmo telefone.",a:["Juntar","Manter ambos"]},
+ {t:"Dono duplicado",d:"«Rui Gomes» aparece 2 vezes com telefones diferentes (936 111 222 / 936 111 223).",a:["Juntar","Manter ambos"]},
+ {t:"NIF inválido",d:"«Manuel Teixeira» tem o NIF 123456780, que não passa na validação.",a:["Importar sem NIF","Corrigir depois"]},
+ {t:"Animal sem microchip",d:"«Tobias» (Cão, 7 anos) não tem microchip registado. A identificação é obrigatória.",a:["Marcar para rever","Ignorar"]},
+ {t:"Vacina sem data",d:"«Nala» tem uma vacina antirrábica sem data de administração.",a:["Usar data da consulta","Marcar para rever"]},
+ {t:"Produto sem taxa de IVA",d:"«Champô clorexidina 250 ml» não tem taxa de IVA definida.",a:["Aplicar 23%","Aplicar 6%"]}
+];
+let mStep = 1, mFile = "", mRes = {}, mImported = false;
+const fmtN = n => n.toLocaleString("pt-PT");
+function renderMigr(){
+  const st = ["1. Ficheiro","2. Análise","3. Conflitos","4. Importação"];
+  $("#msteps").innerHTML = st.map((t,i) => `<span class="step ${i + 1 === mStep ? "on" : i + 1 < mStep ? "ok" : ""}">${i + 1 < mStep ? "✓ " : ""}${t}</span>`).join("");
+  const b = $("#mbox");
+  if (mStep === 1) {
+    b.innerHTML = `<div class="grid g2"><div class="card"><label class="drop" id="mdrop" for="mfile"><b>Arraste para aqui a exportação do QVET</b><div class="muted small" style="margin-top:6px">Excel, CSV ou cópia de segurança (.zip)</div><input type="file" id="mfile" hidden></label>
+      <div class="row" style="margin-top:12px"><span class="muted small">Não tem o ficheiro à mão?</span><span class="sp"></span><button class="pri" id="mdemo">Usar exportação de exemplo</button></div></div>
+      <div class="card"><h3>Como funciona</h3>
+      <div class="mrow"><span>1. Peça ao QVET a exportação dos dados (é um direito da clínica pelo RGPD) ou envie-nos a cópia de segurança.</span></div>
+      <div class="mrow"><span>2. Analisamos o ficheiro e mostramos tudo o que encontrámos.</span></div>
+      <div class="mrow"><span>3. Resolve os conflitos (duplicados, dados em falta).</span></div>
+      <div class="mrow"><span>4. Confirma a importação. Pode desfazer durante 30 dias.</span></div>
+      <div class="warnbox">A equipa Clinora Vet acompanha a migração e confirma as contagens consigo antes de desligar o QVET.</div></div></div>`;
+    const go2 = n => { mFile = n; mStep = 2; renderMigr(); analyse(); };
+    $("#mdemo").onclick = () => go2("exportacao_qvet_clinica_rio.zip");
+    $("#mfile").onchange = e => e.target.files[0] && go2(e.target.files[0].name);
+    const d = $("#mdrop");
+    d.ondragover = e => { e.preventDefault(); d.classList.add("over"); };
+    d.ondragleave = () => d.classList.remove("over");
+    d.ondrop = e => { e.preventDefault(); d.classList.remove("over"); const f = e.dataTransfer.files[0]; go2(f ? f.name : "exportacao_qvet.zip"); };
+  } else if (mStep === 2) {
+    b.innerHTML = `<div class="card"><h3>A analisar ${esc(mFile)}</h3><div class="pbar"><i id="mpb"></i></div><div class="muted small" id="mph">A ler o ficheiro…</div>
+      <div class="grid g4" id="mcounts" style="margin-top:14px"></div><div class="row" style="margin-top:14px"><span class="muted small" id="mnote"></span><span class="sp"></span><button class="pri" id="mnext" disabled>Ver conflitos (${MCONF.length})</button></div></div>`;
+    $("#mnext").onclick = () => { mStep = 3; renderMigr(); };
+  } else if (mStep === 3) {
+    const left = MCONF.filter((c,i) => !mRes[i]).length;
+    b.innerHTML = `<div class="card"><div class="row"><h3 style="margin:0">Conflitos a resolver</h3><span class="chip ${left ? "warn" : "good"}">${left ? left + " por resolver" : "Tudo resolvido"}</span><span class="sp"></span><button class="sm" id="mauto">Aplicar sugestões a todos</button></div>
+      <div class="tw" style="margin-top:10px"><table><thead><tr><th>Tipo</th><th>Detalhe</th><th>Decisão</th></tr></thead><tbody>
+      ${MCONF.map((c,i) => `<tr><td><span class="chip ${mRes[i] ? "good" : "warn"}">${esc(c.t)}</span></td><td>${esc(c.d)}</td><td style="white-space:nowrap">${mRes[i] ? `<b>${esc(mRes[i])}</b> <button class="sm" onclick="delete mRes[${i}];renderMigr()">Alterar</button>` : c.a.map((a,j) => `<button class="sm ${j === 0 ? "pri" : ""}" onclick="mRes[${i}]='${a}';renderMigr()">${esc(a)}</button>`).join(" ")}</td></tr>`).join("")}
+      </tbody></table></div><div class="row" style="margin-top:14px"><span class="muted small">Os registos com conflito ficam marcados na ficha para rever mais tarde.</span><span class="sp"></span><button class="pri" id="mgo" ${left ? "disabled" : ""}>Importar tudo</button></div></div>`;
+    $("#mauto").onclick = () => { MCONF.forEach((c,i) => { if (!mRes[i]) mRes[i] = c.a[0]; }); renderMigr(); };
+    $("#mgo").onclick = () => { mStep = 4; renderMigr(); runImport(); };
+  } else {
+    b.innerHTML = `<div class="card"><h3 id="mtit">A importar…</h3><div class="pbar"><i id="mpb"></i></div><div class="muted small" id="mph"></div><div id="mfin"></div></div>`;
+  }
+}
+function analyse(){
+  let i = 0; const box = $("#mcounts");
+  const iv = setInterval(() => {
+    if (i < MENT.length) {
+      const [n,v] = MENT[i]; box.insertAdjacentHTML("beforeend", `<div class="card kpi"><div class="v">${fmtN(v)}</div><div class="l">${n}</div></div>`);
+      $("#mpb").style.width = ((i + 1) / MENT.length * 100) + "%"; $("#mph").textContent = "A ler " + n.toLowerCase() + "…"; i++;
+    } else {
+      clearInterval(iv); $("#mph").textContent = "Análise concluída. Histórico de 2014 a 2026.";
+      $("#mnote").textContent = `${MCONF.length} registos precisam da sua decisão. O resto entra automaticamente.`; $("#mnext").disabled = false;
+    }
+  }, 280);
+}
+function runImport(){
+  let i = 0;
+  const iv = setInterval(() => {
+    if (i < MENT.length) { $("#mpb").style.width = ((i + 1) / MENT.length * 100) + "%"; $("#mph").textContent = "A importar " + MENT[i][0].toLowerCase() + "…"; i++; return; }
+    clearInterval(iv); mImported = true;
+    $("#mtit").textContent = "Migração concluída"; $("#mph").textContent = "";
+    $("#mfin").innerHTML = `<p><span class="chip good">0 registos perdidos</span> Todas as contagens coincidem com o QVET.</p>
+      <div class="tw"><table><thead><tr><th>Dados</th><th class="r">No QVET</th><th class="r">No Clinora Vet</th><th></th></tr></thead><tbody>
+      ${MENT.map(([n,v]) => `<tr><td>${n}</td><td class="r">${fmtN(v)}</td><td class="r">${fmtN(v)}</td><td><span class="chip good">✓</span></td></tr>`).join("")}</tbody></table></div>
+      <div class="warnbox">${(n => n === 1 ? "1 registo ficou marcado" : n + " registos ficaram marcados")(MCONF.filter((c,k) => /rever|depois/i.test(mRes[k] || "")).length)} para rever. Pode desfazer a migração até ${fmtD("2026-11-26")}.</div>
+      <div class="row" style="margin-top:14px"><button onclick="mStep=1;mRes={};renderMigr()">Nova importação</button><span class="sp"></span><button class="pri" onclick="verImportados()">Ver animais importados</button></div>`;
+  }, 380);
+}
+function verImportados(){
+  if (!A.some(a => a.id === 101)) {
+    A.push({id:101,n:"Pipoca",sp:"Gato",br:"Persa",age:"5 anos",w:4.4,chip:"620098100112233",o:"Helena Matos",tel:"932 888 999",nif:"212345678",vac:[["Trivalente felina","2026-11-12"]],hist:["2025-11-12 · [Importado do QVET] Vacinação anual","2024-03-08 · [Importado do QVET] Conjuntivite, colírio"]});
+    A.push({id:102,n:"Simba",sp:"Cão",br:"Golden retriever",age:"10 anos",w:33.5,chip:"620098100445566",o:"Nuno Pires",tel:"916 222 111",nif:"265432109",vac:[["Raiva","2027-02-20"]],hist:["2026-07-02 · [Importado do QVET] Hipotiroidismo, levotiroxina","2026-02-20 · [Importado do QVET] Vacina da raiva"]});
+  }
+  $("#aq").value = ""; cur = 101; go("animais");
+}
+
+
+/* ---------- Pedidos online ---------- */
+const BDAYS = [["2026-10-28","qua 28 out"],["2026-10-29","qui 29 out"],["2026-10-30","sex 30 out"],["2026-10-31","sáb 31 out"]];
+const BHOURS = ["09:00","09:30","10:00","10:30","11:00","11:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30"];
+const BBUSY = {"2026-10-28":["09:00","10:00","10:30","15:00"],"2026-10-29":["09:30","11:00","14:00","14:30","17:00"],"2026-10-30":["10:00","16:00"],"2026-10-31":["09:00","09:30","10:00","11:30"]};
+const PED = [
+ {id:1,o:"Pedro Martins",tel:"917 000 007",n:"Kiko",sp:"Cão",m:"Vacinação e microchip",d:"2026-10-28",h:"11:00",at:"ontem, 23:14",st:""},
+ {id:2,o:"Inês Costa",tel:"963 000 008",n:"Pantufa",sp:"Gato",m:"Vómitos desde ontem",d:"2026-10-29",h:"10:00",at:"hoje, 07:02",st:""},
+ {id:3,o:"Ana Lopes",tel:"912 345 678",n:"Bolinha",sp:"Cão",m:"Vacina da raiva (lembrete)",d:"2026-10-30",h:"09:30",at:"hoje, 08:40",st:""}
+];
+let bDay = BDAYS[0][0], bHour = "", bDone = null;
+function taken(d,h){ return (BBUSY[d] || []).includes(h) || PED.some(p => p.d === d && p.h === h && p.st !== "Recusado"); }
+function renderPhone(){
+  const ph = $("#phone");
+  if (bDone) { ph.innerHTML = `<div class="pt"><i></i>Clínica Veterinária do Rio</div><div style="text-align:center;padding:40px 6px"><div style="font-size:36px">✓</div><h3 style="margin:6px 0">Pedido enviado</h3><p class="pm">${esc(bDone)}</p><p class="pm">A clínica confirma por WhatsApp.</p><button class="sm" onclick="bDone=null;bHour='';renderPhone()">Fazer outro pedido</button></div>`; return; }
+  ph.innerHTML = `<div class="pt"><i></i>Clínica Veterinária do Rio</div><div class="pm" style="margin-bottom:8px">Marcar consulta · urgências: 210 000 000</div>
+   <div class="pm">Dia</div><div class="picks">${BDAYS.map(([d,l]) => `<button class="pick ${d === bDay ? "on" : ""}" onclick="bDay='${d}';bHour='';renderPhone()">${l}</button>`).join("")}</div>
+   <div class="pm">Hora</div><div class="picks">${BHOURS.map(h => `<button class="pick ${h === bHour ? "on" : ""} ${taken(bDay,h) ? "x" : ""}" onclick="bHour='${h}';renderPhone()">${h}</button>`).join("")}</div>
+   <input id="bo" placeholder="O seu nome" value="Helena Matos" style="margin-bottom:6px"><input id="bt" placeholder="Telemóvel" value="932 888 999" style="margin-bottom:6px">
+   <div class="row" style="gap:6px;margin-bottom:6px;flex-wrap:nowrap"><input id="bn" placeholder="Animal" value="Pipoca"><select id="bs" style="width:96px"><option>Gato</option><option>Cão</option><option>Coelho</option></select></div>
+   <input id="bm" placeholder="Motivo (opcional)" value="Olho vermelho há 2 dias" style="margin-bottom:10px">
+   <button class="pri" style="width:100%" ${bHour ? "" : "disabled"} onclick="bookIt()">${bHour ? "Pedir às " + bHour : "Escolha uma hora"}</button>`;
+}
+function bookIt(){
+  const p = {id: PED.length + 1, o: $("#bo").value || "Tutor", tel: $("#bt").value, n: $("#bn").value || "Animal", sp: $("#bs").value, m: $("#bm").value, d: bDay, h: bHour, at: "agora", st: "", fresh: true};
+  PED.unshift(p); bDone = `${BDAYS.find(x => x[0] === bDay)[1]} às ${bHour}`; renderPhone(); renderPed(); badges(); toast("Novo pedido online: " + p.n + " (" + p.o + ")");
+}
+function renderPed(){
+  const open = PED.filter(p => !p.st), done = PED.filter(p => p.st);
+  $("#pedtb").innerHTML = (open.length ? open.map(p => `<div class="slot" ${p.fresh ? 'style="border-color:var(--accent)"' : ""}><div class="row"><b>${BDAYS.find(x => x[0] === p.d)[1]} · ${p.h}</b><span class="sp"></span><span class="muted small">pedido ${p.at}</span></div>
+     <div>${esc(p.n)} <span class="chip">${p.sp}</span> · ${esc(p.o)} <span class="muted small">${esc(p.tel)}</span></div><div class="muted small">${esc(p.m || "—")}</div>
+     <div class="row" style="margin-top:8px"><select id="pv${p.id}" style="width:auto">${VETS.map(v => `<option>${v}</option>`).join("")}</select><span class="sp"></span><button class="sm" onclick="pedAns(${p.id},0)">Recusar</button><button class="sm pri" onclick="pedAns(${p.id},1)">Confirmar</button></div></div>`).join("")
+     : `<p class="muted small">Sem pedidos por responder.</p>`)
+   + (done.length ? `<div class="muted small" style="margin-top:8px">Respondidos: ${done.map(p => `${esc(p.n)} <span class="chip ${p.st === "Confirmado" ? "good" : "bad"}">${p.st}</span>`).join(" ")}</div>` : "");
+}
+function pedAns(id, ok){
+  const p = PED.find(x => x.id === id); p.st = ok ? "Confirmado" : "Recusado"; p.fresh = false;
+  let novo = "";
+  if (ok && !A.some(a => a.n === p.n && a.o === p.o)) { A.push({id: 200 + id, n: p.n, sp: p.sp, br: "—", age: "—", w: p.sp === "Cão" ? 10 : 4, chip: "—", o: p.o, tel: p.tel, nif: "", vac: [], hist: ["2026-10-27 · Ficha criada pela marcação online"]}); novo = " Dono e animal novos criados."; }
+  renderPed(); badges();
+  if (ok) openModal(`<h3>Marcação confirmada</h3><p>${esc(p.n)} · ${BDAYS.find(x => x[0] === p.d)[1]} às ${p.h} com ${esc($("#pv" + id)?.value || VETS[0])}.${novo}</p><div class="dose">WhatsApp para ${esc(p.o.split(" ")[0])}: «A consulta do ${esc(p.n)} está confirmada para ${BDAYS.find(x => x[0] === p.d)[1]} às ${p.h}. Até lá!»</div><p class="muted small">Na véspera, o lembrete da consulta aparece em Lembretes.</p>`);
+  else toast("Pedido recusado. Sugerimos outra hora por WhatsApp (simulado).");
+}
+
+/* ---------- Painel ---------- */
+const PM = [["mai",15840],["jun",16920],["jul",15110],["ago",13980],["set",17650],["out",19430]];
+function renderPainel(){
+  const k = [["Faturação de outubro", eur(19430), "+10 % vs setembro", "good"],["Consultas", "412", "+6 % vs setembro", "good"],["Ticket médio", eur(47.16), "+3,8 %", "good"],["Animais novos", "38", "11 vieram da marcação online", ""]];
+  $("#pkpi").innerHTML = k.map(([l,v,d,c]) => `<div class="card kpi"><div class="l">${l}</div><div class="v">${v}</div><span class="chip ${c}">${d}</span></div>`).join("");
+  const max = Math.max(...PM.map(m => m[1]));
+  $("#pbars").innerHTML = PM.map(([m,v],i) => `<div class="${i === PM.length - 1 ? "cur" : ""}"><span>${Math.round(v / 100) / 10}k €</span><i style="height:0"></i><span>${m}</span></div>`).join("");
+  requestAnimationFrame(() => $$("#pbars i").forEach((b,i) => b.style.height = (PM[i][1] / max * 100) + "%"));
+  $("#pwatch").innerHTML = `<div class="mrow"><span>Faltas a consultas</span><b>4,1 % <span class="chip good">−2,3 pp desde os lembretes</span></b></div>
+   <div class="mrow"><span>Vacinas em atraso</span><b>${A.reduce((n,a) => n + a.vac.filter(([,d]) => days(d) < 0).length, 0) + 23} <a href="#" onclick="go('lemb');return false">enviar lembretes</a></b></div>
+   <div class="mrow"><span>Lembretes que viraram consulta</span><b>61 %</b></div>
+   <div class="mrow"><span>Internamento: taxa de ocupação</span><b>68 %</b></div>
+   <div class="mrow"><span>Produtos a caducar em 30 dias</span><b>${stockAlerts()} <a href="#" onclick="go('farm');return false">ver</a></b></div>`;
+  const C = [["Licença base (2 veterinários)","55 €","57 €"],["Internamento","+10 €","incluído"],["Assinatura digital de consentimentos","+25 €","incluído"],["Marcação online, lembretes e painel","conforme contrato","incluído"],["Total por mês","≈ 90 €","57 €"],["Ligação a laboratórios","+29 €","em breve, sem custo"]];
+  $("#pcmp").innerHTML = C.map(([a,b,c],i) => `<tr ${i === C.length - 2 ? 'style="font-weight:700"' : ""}><td>${a}</td><td class="r">${b}</td><td class="r">${c}</td></tr>`).join("");
+}
+
+/* ---------- Demo guiada ---------- */
+const TOUR = [
+ {v:"agenda", sel:"#kpis", k:"08:55 · Abertura", t:"A manhã num só ecrã", p:"A Dra. Inês abre o Clinora Vet: consultas do dia por veterinário, internados, exames por ver e alertas de stock. Cada número leva ao sítio certo."},
+ {v:"pedidos", sel:"#pedcard", k:"09:00 · Receção", t:"Pedidos que chegaram durante a noite", p:"O Pedro marcou às 23:14, quando a clínica estava fechada. A receção confirma com um clique: dono, animal e consulta são criados sozinhos. Experimente marcar no telemóvel à esquerda.", go: () => { bDone = null; renderPhone(); }},
+ {v:"consulta", sel:"#cdict", k:"09:10 · Consulta", t:"Ditar em vez de escrever", p:"Carregue em «Ditar consulta (IA)»: o veterinário fala, a nota SOAP preenche-se. A especialidade traz os campos próprios (cardiologia, dermatologia…).", go: () => openCons(1)},
+ {v:"consulta", sel:"#rxbox", k:"09:20 · Prescrição", t:"Dose calculada pelo peso", p:"Escolha um medicamento: a dose aparece em mg e ml para os kg do animal, desconta o stock e passa para a fatura."},
+ {v:"intern", sel:"#v-intern .card", k:"11:00 · Internamento", t:"Folha de internamento sem papel", p:"Tratamentos por hora com um clique, sinais vitais e alertas de doses em atraso. É o que normalmente só existe em hospitais."},
+ {v:"exames", sel:"#v-exames .card", k:"12:30 · Exames", t:"Resultados com alertas", p:"Valores fora do intervalo vêm marcados e o relatório para o tutor sai pronto."},
+ {v:"fatura", sel:"#v-fatura .card", k:"13:00 · Faturação", t:"A consulta passa a fatura sozinha", p:"Tudo o que foi feito e dado entra na fatura. Emissão certificada pela AT através da Vendus, e pagamento por MB WAY."},
+ {v:"lemb", sel:"#v-lemb .card", k:"17:30 · Fim do dia", t:"Lembretes que trazem consultas", p:"Vacinas em atraso e a vencer, com a mensagem pronta para WhatsApp e o link para o tutor marcar sozinho. Clique em «WhatsApp» para ver a mensagem."},
+ {v:"painel", sel:"#pkpi", k:"Fim do mês", t:"O painel da gerência", p:"Faturação, consultas, ticket médio e faltas, mês a mês. E a comparação com o que a clínica pagaria no QVET."},
+ {v:"migr", sel:"#msteps", k:"E para começar", t:"Migração do QVET sem perder nada", p:"Carregue em «Usar exportação de exemplo»: donos, animais, histórico e faturas entram, os conflitos ficam para decidir e as contagens são confirmadas. Grátis para clínicas fundadoras."}
+];
+let tStep = -1;
+function tourStart(){ closeModal(); tStep = 0; tourShow(); }
+function tourEnd(){ tStep = -1; $("#tour").classList.remove("on"); $$(".hl").forEach(e => e.classList.remove("hl")); }
+function tourShow(){
+  const s = TOUR[tStep]; $$(".hl").forEach(e => e.classList.remove("hl"));
+  go(s.v); s.go && s.go();
+  const el = $(s.sel); if (el) { el.classList.add("hl"); el.scrollIntoView({block: "center", behavior: "smooth"}); }
+  $("#tour").innerHTML = `<div class="row"><span class="tk">${s.k}</span><span class="sp"></span><button class="sm" onclick="tourEnd()" aria-label="Fechar demo">✕</button></div><h4>${s.t}</h4><p>${s.p}</p>
+   <div class="dots">${TOUR.map((_,i) => `<i class="${i <= tStep ? "on" : ""}"></i>`).join("")}</div>
+   <div class="row"><span class="muted small">${tStep + 1} de ${TOUR.length}</span><span class="sp"></span>${tStep ? `<button class="sm" onclick="tStep--;tourShow()">Anterior</button>` : ""}${tStep < TOUR.length - 1 ? `<button class="sm pri" onclick="tStep++;tourShow()">Seguinte</button>` : `<button class="sm pri" onclick="tourEnd();openModal(OUTRO)">Terminar</button>`}</div>`;
+  $("#tour").classList.add("on");
+}
+const OUTRO = `<div class="hero"><h2>Um dia inteiro, num só programa</h2><p>Agenda, marcação online, consulta com ditado, internamento, exames, faturação certificada, lembretes e painel.</p>
+ <div class="who"><div><b>41 €/mês</b><br>1 veterinário, tudo incluído</div><div><b>Migração grátis</b><br>do QVET ou de outro programa</div><div><b>50 % no 1.º ano</b><br>para clínicas fundadoras</div></div>
+ <p class="small">Fale connosco: hugocnamaral@gmail.com</p></div>`;
+const INTRO = `<div class="hero"><svg width="56" height="56" viewBox="6 6 84 84" aria-hidden="true"><rect x="6" y="6" width="84" height="84" rx="24" fill="#0D9488"/><path d="M48 49C38.5 49 30.5 58.5 32.3 65.6C33.8 71.6 40.6 71.2 48 69.9C55.4 71.2 62.2 71.6 63.7 65.6C65.5 58.5 57.5 49 48 49Z" fill="#fff"/><ellipse cx="29.5" cy="45.5" rx="5.6" ry="7.2" fill="#fff"/><ellipse cx="40" cy="33.5" rx="5.8" ry="7.6" fill="#fff"/><ellipse cx="66.5" cy="45.5" rx="5.6" ry="7.2" fill="#fff"/><ellipse cx="56" cy="33.5" rx="5.8" ry="7.6" fill="#F59E0B"/></svg>
+ <h2>Um dia na Clínica Veterinária do Rio</h2><p>2 veterinários, 1 rececionista, 1 auxiliar. Acompanhe o dia em 10 passos, das 8:55 ao fecho do mês.</p>
+ <div class="who"><div><b>Dra. Inês</b><br>Clínica geral e cirurgia</div><div><b>Dr. Tiago</b><br>Cardiologia</div><div><b>Marta</b><br>Receção</div></div>
+ <div class="row" style="justify-content:center"><button onclick="closeModal()">Explorar livremente</button><button class="pri" onclick="tourStart()">▶ Começar a demo guiada</button></div>
+ <p class="muted small" style="margin-top:10px">Protótipo com dados fictícios. Nada é guardado.</p></div>`;
+
+const R = {pedidos: () => { renderPhone(); renderPed(); }, painel: renderPainel, migr: renderMigr, agenda: renderAgenda, animais: () => renderAnimais(cur), exames: renderExames, intern: renderIntern, relat: renderRelat, farm: renderFarm, orc: renderOrc, fatura: renderFat, lemb: renderLemb};
+openCons(1); go("agenda"); openModal(INTRO);
+</script>
