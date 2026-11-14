@@ -1,4 +1,4 @@
-/* Formulário «Pedir demonstração»: envia o pedido para a Hsocial, com a origem da visita (UTM). */
+/* Formulário «Pedir acesso»: envia o pedido para a Hsocial, com a origem da visita (UTM). */
 (function () {
   // 1) Origem da visita: guarda os UTM durante 30 dias (mesmo formato do lead.js da Hsocial)
   var CHAVE = 'hsocial_utm', CAMPOS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];

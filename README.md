@@ -1,9 +1,10 @@
-# Softwora · Instalar
+# Softwora · Programas
 
-Site de instalação e de pedidos de demonstração dos programas da Softwora (Clinora Vet, Reab e Endo, Clubora, Bizora, Bazora e Hinvoice).
+Site dos programas da Softwora (Clinora Vet, Reab e Endo, Clubora, Bizora, Bazora, Hinvoice e Realora Transora), com pedidos de acesso.
 
-- Cada produto tem uma página com «Usar online», «Experimentar», «Instalar no Windows» e **«Pedir demonstração»**.
-- Os pedidos de demonstração vão para a Hsocial (página Leads), com a origem da visita (UTM).
-- Os instaladores `.exe` estão nos *Releases* deste repositório; o botão de download aponta para `releases/latest/download/<ficheiro>.exe`.
+- **Acesso fechado:** o site não tem download público. Cada produto tem uma página com **«Pedir acesso»**, «Experimentar» (demonstração no browser, com dados fictícios, quando existe) e «Já tens conta?» (a versão online).
+- Os pedidos de acesso vão para a Hsocial (página Leads), com a origem da visita (UTM). O instalador para Windows e a conta são entregues por nós a quem pediu.
+- O Realora Transora é só web: a página liga a `https://app.transora.eu`.
+- `blog/`, `sitemap.xml` e `robots.txt` são escritos pela Hsocial ao publicar artigos.
 
-**Não editar à mão:** o site é gerado por `C:\projectos\Softwora-instaladores\codigo\gerar-site.py` (`python gerar-site.py`, depois copiar `codigo/site` para esta pasta).
+**Não editar à mão:** as páginas são geradas por `C:\projectos\Softwora-instaladores\codigo\gerar-site.py` (`python gerar-site.py`). Depois copia-se para esta pasta só o que o gerador produz (`codigo/site`), sem apagar `blog/`, `sitemap.xml` e `robots.txt`.

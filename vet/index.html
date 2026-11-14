@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Clinora Vet · Instalar</title><meta name="description" content="Gestão de clínicas veterinárias: agenda, fichas dos animais, vacinas, faturação e marcação online.">
+<title>Clinora Vet · Softwora</title><meta name="description" content="Gestão de clínicas veterinárias: agenda, fichas dos animais, vacinas, faturação e marcação online.">
 <link rel="icon" href="../softwora-simbolo.svg">
 <style>@font-face{font-family:PJS;src:url(../pjs.woff2) format('woff2');font-weight:200 800;font-display:swap}
 :root{--bg:#F5F7FB;--card:#fff;--ink:#0B132B;--mut:#475569;--line:#E2E8F0;--cor:#0B132B}
@@ -17,7 +17,7 @@ h1{font-size:clamp(28px,4vw,40px);line-height:1.15;letter-spacing:-.02em;margin:
 .card:hover{border-color:var(--cor)}
 .card img{height:34px;width:auto;align-self:flex-start}.card p{margin:0;color:var(--mut);font-size:15px}
 .card .vers{font-size:13px;color:var(--mut);margin-top:auto}
-.acoes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:28px 0}
+.acoes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:28px 0}
 @media (max-width:760px){.acoes{grid-template-columns:1fr}}
 .acao{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:8px}
 .acao h2{font-size:18px;margin:0}.acao p{margin:0;color:var(--mut);font-size:14px;flex:1}
@@ -43,26 +43,25 @@ footer{border-top:1px solid var(--line);color:var(--mut);font-size:13px;padding:
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) .estado.ok{color:#4ADE80}:root:not([data-theme=light]) .estado.erro{color:#F87171}}
 :root{--cor:#0F766E}</style></head>
 <body><header><div class="w"><a href="../"><img src="../softwora-logotipo.svg" alt="Softwora"></a><nav><a href="../">Todos os produtos</a></nav></div></header>
-<main class="w"><section class="hero"><img src="logotipo.svg" alt="Clinora Vet" style="height:48px;margin-bottom:22px"><h1>Clinora Vet</h1><p class="lead">Gestão de clínicas veterinárias: agenda, fichas dos animais, vacinas, faturação e marcação online.</p><a class="btn" href="#pedir-demonstracao">Pedir demonstração</a></section>
+<main class="w"><section class="hero"><img src="logotipo.svg" alt="Clinora Vet" style="height:48px;margin-bottom:22px"><h1>Clinora Vet</h1><p class="lead">Gestão de clínicas veterinárias: agenda, fichas dos animais, vacinas, faturação e marcação online.</p><a class="btn" href="#pedir-demonstracao">Pedir acesso</a></section>
 <div class="acoes">
- <div class="acao"><h2>Usar online</h2><p>Liga ao endereço da tua clínica (a versão online do Clinora Vet).</p><a class="btn" data-online="vet" aria-disabled="true" href="#">Endereço por publicar</a><span class="mini">Pede-nos o endereço da tua conta.</span></div>
+ <div class="acao"><h2>Pedir acesso</h2><p>Mostramos-te o programa com o teu caso e tratamos contigo da conta e da instalação no Windows.</p><a class="btn" href="#pedir-demonstracao">Pedir acesso</a><span class="mini">Respondemos num dia útil.</span></div>
  <div class="acao"><h2>Experimentar</h2><p>Visita guiada com uma clínica fictícia: agenda, pedidos online, painel e faturação.</p><a class="btn sec" href="demo.html">Abrir a demonstração</a><span class="mini">Dados fictícios. Corre no browser, sem instalar nada.</span></div>
- <div class="acao" id="windows"><h2>Instalar no Windows</h2><p>Programa para Windows 10 e 11 (64 bits), com atalho no ambiente de trabalho, demonstração incluída e desinstalador.</p><a class="btn" data-exe="Clinora-Vet-Setup-1.0.0.exe" href="#" download>Descarregar para Windows</a><span class="mini">Clinora-Vet-Setup-1.0.0.exe · cerca de 85 MB</span></div>
+ <div class="acao"><h2>Já tens conta?</h2><p>Liga ao endereço da tua clínica (a versão online do Clinora Vet).</p><a class="btn sec" data-online="vet" aria-disabled="true" href="#">Endereço por publicar</a><span class="mini">Pede-nos o endereço da tua conta.</span></div>
 </div>
-<div class="passos"><h2>Como instalar no Windows</h2><ol><li>Descarrega o ficheiro e abre-o.</li><li>Se aparecer «O Windows protegeu o seu PC», carrega em «Mais informações» e depois em «Executar mesmo assim».</li><li>Escolhe a pasta (ou deixa a sugerida) e conclui. O Clinora Vet abre no ecrã de início, onde podes entrar ou experimentar a demonstração.</li></ol></div>
 <ul class="notas"><li>A versão online corre na Vercel com a base de dados no Supabase (Frankfurt).</li><li>Marcação online para os clientes da clínica numa página própria.</li></ul>
-<section class="pedido" id="pedir-demonstracao" aria-labelledby="pd-h"><h2 id="pd-h">Pedir demonstração</h2>
-<p>Deixa os teus contactos e mostramos-te o Clinora Vet em 20 minutos, online, com o teu caso. Respondemos num dia útil.</p>
+<section class="pedido" id="pedir-demonstracao" aria-labelledby="pd-h"><h2 id="pd-h">Pedir acesso</h2>
+<p>Deixa os teus contactos: mostramos-te o Clinora Vet em 20 minutos, online, com o teu caso, e tratamos do acesso contigo. Respondemos num dia útil.</p>
 <form class="form" data-produto="Clinora Vet" data-marca="clinia" data-destino="https://hsocial.vercel.app/api/leads" novalidate onsubmit="return false">
  <label class="campo">Nome<input name="nome" autocomplete="name" required></label>
  <label class="campo">Email<input name="email" type="email" autocomplete="email" required></label>
  <label class="campo">Clínica<input name="empresa" autocomplete="organization"></label>
  <label class="campo">Telefone (opcional)<input name="telefone" type="tel" autocomplete="tel"></label>
  <label class="campo todo">O que gostavas de ver? (opcional)<textarea name="mensagem"></textarea></label>
- <div class="fim"><button class="btn" type="submit">Pedir demonstração</button><p class="estado" role="status" aria-live="polite"></p></div>
+ <div class="fim"><button class="btn" type="submit">Pedir acesso</button><p class="estado" role="status" aria-live="polite"></p></div>
 </form>
-<p class="mini">Também podes escrever para <a href="mailto:support@clinia.live?subject=Demonstração Clinora Vet">support@clinia.live</a>. Os teus dados só servem para marcar a demonstração.</p></section></main>
+<p class="mini">Também podes escrever para <a href="mailto:support@clinia.live?subject=Pedido de acesso Clinora Vet">support@clinia.live</a>. Os teus dados só servem para tratar do teu pedido.</p></section></main>
 <script src="../pedido.js" defer></script>
-<footer><div class="w">Softwora · uma empresa do Grupo Henterprises. Os instaladores para Windows não estão assinados digitalmente: no primeiro arranque o Windows pode mostrar «O Windows protegeu o seu PC» → «Mais informações» → «Executar mesmo assim».</div></footer>
+<footer><div class="w">Softwora · uma empresa do Grupo Henterprises.</div></footer>
 <script src="../ligacoes.js"></script>
 </body></html>
