@@ -9,7 +9,8 @@ window.LIGACOES = {
   "bizora": "",
   "bazora": "",
   "hinvoice": "",
-  "transora": "https://app.transora.eu"
+  "transora": "https://app.transora.eu",
+  "valora": ""
  }
 };
 (function(){var L=window.LIGACOES;document.querySelectorAll('[data-online]').forEach(function(a){var u=L.online[a.dataset.online];if(u){a.href=u;a.removeAttribute('aria-disabled');a.textContent='Abrir a versão online';var n=a.parentNode.querySelector('.mini');if(n)n.textContent=u.replace(/^https?:\/\//,'');}});})();
